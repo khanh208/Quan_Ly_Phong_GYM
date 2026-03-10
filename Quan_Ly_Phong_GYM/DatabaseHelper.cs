@@ -8,39 +8,36 @@ using System.Threading.Tasks;
 
 namespace Quan_Ly_Phong_GYM
 {
-    internal class DatabaseHelper
+    // Chỉ để duy nhất một class DatabaseHelper bên trong namespace này
+    public class DatabaseHelper
     {
-    }
-}
-public class DatabaseHelper
-{
-    // Thay đổi Chuỗi kết nối cho phù hợp với máy của em
-    private string connectionString = @"Data Source=TEN_MAY_TINH;Initial Catalog=GymManagement;Integrated Security=True";
+        // Cập nhật chuỗi kết nối phù hợp với máy của bạn
 
-    // Hàm thực thi truy vấn SELECT (Lấy dữ liệu đổ vào DataGridView)
-    public DataTable ExecuteQuery(string query)
-    {
-        DataTable data = new DataTable();
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        private string connectionString = @"Data Source=KHANHNG208;Initial Catalog=QL_GYM;User ID=sa;Password=khanh208;TrustServerCertificate=True";        // Hàm thực thi truy vấn SELECT
+        public DataTable ExecuteQuery(string query)
         {
-            connection.Open();
-            SqlCommand command = new SqlCommand(query, connection);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(data);
+            DataTable data = new DataTable();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                adapter.Fill(data);
+            }
+            return data;
         }
-        return data;
-    }
 
-    // Hàm thực thi INSERT, UPDATE, DELETE
-    public int ExecuteNonQuery(string query)
-    {
-        int result = 0;
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        // Hàm thực thi INSERT, UPDATE, DELETE
+        public int ExecuteNonQuery(string query)
         {
-            connection.Open();
-            SqlCommand command = new SqlCommand(query, connection);
-            result = command.ExecuteNonQuery();
+            int result = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection);
+                result = command.ExecuteNonQuery();
+            }
+            return result;
         }
-        return result;
     }
 }
