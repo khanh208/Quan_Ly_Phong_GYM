@@ -38,9 +38,21 @@ namespace Quan_Ly_Phong_GYM
         // Tương tự cho các nút khác khi em tạo xong các UserControl tương ứng
         private void btnGoiTap_Click(object sender, EventArgs e)
         {
-            // ucGoiTap uc = new ucGoiTap();
-            // addUserControl(uc);
+            ucGoiTap uc = new ucGoiTap();
+            addUserControl(uc); // Hàm dùng chung em vừa sửa xong
+            uc.LoadData();
         }
-
+        private void btnKhuyenMai_Click(object sender, EventArgs e)
+        {
+            ucKhuyenMai uc = new ucKhuyenMai();
+            addUserControl(uc);
+            uc.LoadData();
+        }
+        private void btnHLV_Click(object sender, EventArgs e)
+        {
+            ucHuanLuyenVien uc = new ucHuanLuyenVien();
+            addUserControl(uc);
+            uc.LoadData();
+        }
     }
 }

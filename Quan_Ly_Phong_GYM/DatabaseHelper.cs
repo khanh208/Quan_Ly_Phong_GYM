@@ -1,41 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quan_Ly_Phong_GYM
 {
-    // Chỉ để duy nhất một class DatabaseHelper bên trong namespace này
     public class DatabaseHelper
     {
-        // Cập nhật chuỗi kết nối phù hợp với máy của bạn
+        // CHUỖI KẾT NỐI: Đã cập nhật theo máy KHANHNG208 và tài khoản sa của em
+        // Lưu ý: Thay '123' bằng mật khẩu thật của tài khoản sa máy em
+        private string connectionString = @"Data Source=KHANHNG208;Initial Catalog=QL_GYM;User ID=sa;Password=khanh208;TrustServerCertificate=True";
 
-        private string connectionString = @"Data Source=KHANHNG208;Initial Catalog=QL_GYM;User ID=sa;Password=khanh208;TrustServerCertificate=True";        // Hàm thực thi truy vấn SELECT
+        // 1. Hàm thực thi truy vấn SELECT (Trả về bảng dữ liệu)
         public DataTable ExecuteQuery(string query)
         {
             DataTable data = new DataTable();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(query, connection);
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                adapter.Fill(data);
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Lỗi truy vấn: " + ex.Message);
             }
             return data;
         }
 
-        // Hàm thực thi INSERT, UPDATE, DELETE
+        // 2. Hàm thực thi INSERT, UPDATE, DELETE (Trả về số dòng thành công)
         public int ExecuteNonQuery(string query)
         {
             int result = 0;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(query, connection);
-                result = command.ExecuteNonQuery();
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    result = command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Lỗi thực thi SQL: " + ex.Message);
             }
             return result;
         }

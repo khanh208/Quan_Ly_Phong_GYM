@@ -61,11 +61,35 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ucDangKy.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucDangKy.Designer.cs">
+      <DependentUpon>ucDangKy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucGoiTap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucGoiTap.Designer.cs">
+      <DependentUpon>ucGoiTap.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucHoiVien.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ucHoiVien.Designer.cs">
       <DependentUpon>ucHoiVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucHuanLuyenVien.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucHuanLuyenVien.Designer.cs">
+      <DependentUpon>ucHuanLuyenVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucKhuyenMai.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucKhuyenMai.Designer.cs">
+      <DependentUpon>ucKhuyenMai.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -82,8 +106,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ucDangKy.resx">
+      <DependentUpon>ucDangKy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucGoiTap.resx">
+      <DependentUpon>ucGoiTap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucHoiVien.resx">
       <DependentUpon>ucHoiVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucHuanLuyenVien.resx">
+      <DependentUpon>ucHuanLuyenVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucKhuyenMai.resx">
+      <DependentUpon>ucKhuyenMai.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
