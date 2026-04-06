@@ -16,30 +16,25 @@ namespace Quan_Ly_Phong_GYM
         {
             InitializeComponent();
         }
-
-        // Hàm dùng chung để hiển thị UserControl vào panel chính
-        // Hàm dùng chung để hiển thị UserControl vào vùng TRỐNG (pnlMain)
         private void addUserControl(UserControl userControl)
         {
             userControl.Dock = DockStyle.Fill;
-            pnlMain.Controls.Clear(); // Xóa nội dung cũ trong vùng trắng
-            pnlMain.Controls.Add(userControl); // Thêm nội dung mới vào vùng trắng
+            pnlMain.Controls.Clear(); 
+            pnlMain.Controls.Add(userControl); 
             userControl.BringToFront();
         }
 
-        // Sự kiện khi bấm nút Hội Viên
         private void btnHoiVien_Click(object sender, EventArgs e)
         {
             ucHoiVien uc = new ucHoiVien();
             addUserControl(uc);
-            uc.LoadData(); // Gọi nạp dữ liệu ngay sau khi hiển thị UserControl
+            uc.LoadData(); 
         }
 
-        // Tương tự cho các nút khác khi em tạo xong các UserControl tương ứng
         private void btnGoiTap_Click(object sender, EventArgs e)
         {
             ucGoiTap uc = new ucGoiTap();
-            addUserControl(uc); // Hàm dùng chung em vừa sửa xong
+            addUserControl(uc); 
             uc.LoadData();
         }
         private void btnKhuyenMai_Click(object sender, EventArgs e)
@@ -53,6 +48,26 @@ namespace Quan_Ly_Phong_GYM
             ucHuanLuyenVien uc = new ucHuanLuyenVien();
             addUserControl(uc);
             uc.LoadData();
+        }
+
+        private void btnDangKy_Click(object sender, EventArgs e)
+        {
+            ucDangKy uc = new ucDangKy();
+            addUserControl(uc);
+            uc.LoadAllComboBox();
+            uc.LoadData();
+        }
+
+        private void btnThongKe_Click(object sender, EventArgs e)
+        {
+            ucThongKe uc = new ucThongKe();
+            addUserControl(uc);
+        }
+
+        private void btnKhachVangLai_Click(object sender, EventArgs e)
+        {
+            ucKhachVangLai uc = new ucKhachVangLai();
+            addUserControl(uc);
         }
     }
 }

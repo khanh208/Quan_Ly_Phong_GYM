@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,11 +86,23 @@
     <Compile Include="ucHuanLuyenVien.Designer.cs">
       <DependentUpon>ucHuanLuyenVien.cs</DependentUpon>
     </Compile>
+    <Compile Include="ucKhachVangLai.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucKhachVangLai.Designer.cs">
+      <DependentUpon>ucKhachVangLai.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucKhuyenMai.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ucKhuyenMai.Designer.cs">
       <DependentUpon>ucKhuyenMai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucThongKe.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucThongKe.Designer.cs">
+      <DependentUpon>ucThongKe.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -118,8 +131,14 @@
     <EmbeddedResource Include="ucHuanLuyenVien.resx">
       <DependentUpon>ucHuanLuyenVien.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ucKhachVangLai.resx">
+      <DependentUpon>ucKhachVangLai.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucKhuyenMai.resx">
       <DependentUpon>ucKhuyenMai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucThongKe.resx">
+      <DependentUpon>ucThongKe.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
