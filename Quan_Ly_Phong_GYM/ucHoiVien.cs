@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Quan_Ly_Phong_GYM
 {
     public partial class ucHoiVien : UserControl
     {
-        // Khởi tạo đối tượng kết nối CSDL
         DatabaseHelper db = new DatabaseHelper();
 
         public ucHoiVien()
@@ -20,138 +14,185 @@ namespace Quan_Ly_Phong_GYM
             InitializeComponent();
         }
 
-        // Sự kiện chạy khi UserControl vừa được nạp lên
+        #region --- KHỞI TẠO & NẠP DỮ LIỆU ---
+
         private void ucHoiVien_Load(object sender, EventArgs e)
         {
-            LoadData(); // Gọi hàm này để đổ dữ liệu từ SQL vào bảng ngay lập tức
+            LoadData();
+            SetupGridViewHeaders();
         }
 
-        // Hàm nạp dữ liệu từ SQL Server
-        public void LoadData()
+        private void SetupGridViewHeaders()
         {
-            // Truy vấn lấy toàn bộ danh sách hội viên
-            string query = "SELECT * FROM HoiVien";
+            if (dgvHoiVien.Columns.Count > 0)
+            {
+                dgvHoiVien.Columns["MaHV"].HeaderText = "Mã HV";
+                dgvHoiVien.Columns["HoTen"].HeaderText = "Họ và Tên";
+                dgvHoiVien.Columns["NgaySinh"].HeaderText = "Ngày Sinh";
+                dgvHoiVien.Columns["GioiTinh"].HeaderText = "Phái";
+                dgvHoiVien.Columns["SDT"].HeaderText = "Số điện thoại";
+                dgvHoiVien.Columns["NgayHetHan"].HeaderText = "Hạn dùng"; // Giữ lại để xem trạng thái
 
-            // Đổ dữ liệu vào DataGridView (đảm bảo dgvHoiVien là tên bảng của bạn)
+                dgvHoiVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+        }
+
+        public void LoadData(string keyword = "")
+        {
+            string query = "SELECT * FROM HoiVien";
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query += $" WHERE HoTen LIKE N'%{keyword}%' OR SDT LIKE '%{keyword}%'";
+            }
+            query += " ORDER BY MaHV DESC";
             dgvHoiVien.DataSource = db.ExecuteQuery(query);
         }
+
+        #endregion
+
+        #region --- TÌM KIẾM (SEARCH) ---
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            LoadData(txtSearch.Text.Trim());
+        }
+
+        #endregion
+
+        #region --- NGHIỆP VỤ THÊM - SỬA - XÓA ---
+
         private void btnThem_Click(object sender, EventArgs e)
         {
-            // 1. Lấy dữ liệu từ giao diện
-            string hoTen = txtHoTen.Text.Trim();
+            if (!ValidateInputs()) return;
+
             string sdt = txtSDT.Text.Trim();
-            string gioiTinh = cboGioiTinh.Text;
-            DateTime ngaySinh = dtpNgaySinh.Value;
-
-            // 2. Kiểm tra bắt buộc điền hết thông tin
-            if (string.IsNullOrEmpty(hoTen) || string.IsNullOrEmpty(sdt) || string.IsNullOrEmpty(gioiTinh))
+            if (IsSdtDuplicate(sdt))
             {
-                MessageBox.Show("Vui lòng điền đầy đủ tất cả thông tin!", "Thông báo");
+                MessageBox.Show("Số điện thoại này đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 3. Kiểm tra SĐT (Phải là số và có đúng 10 chữ số)
-            if (sdt.Length != 10 || !sdt.All(char.IsDigit))
+            string sql = $@"INSERT INTO HoiVien (HoTen, NgaySinh, GioiTinh, SDT) 
+                            VALUES (N'{txtHoTen.Text.Trim()}', '{dtpNgaySinh.Value:yyyy-MM-dd}', N'{cboGioiTinh.Text}', '{sdt}')";
+
+            if (db.ExecuteNonQuery(sql) > 0)
             {
-                MessageBox.Show("Số điện thoại phải bao gồm 10 chữ số và không chứa ký tự chữ!", "Lỗi định dạng");
-                return;
-            }
-
-            // 4. Kiểm tra ngày sinh hợp lý (Ví dụ: Hội viên phải từ 5 đến 100 tuổi)
-            int tuoi = DateTime.Now.Year - ngaySinh.Year;
-            if (ngaySinh >= DateTime.Now || tuoi < 5 || tuoi > 100)
-            {
-                MessageBox.Show("Ngày sinh không hợp lý (Hội viên phải từ 5 tuổi trở lên)!", "Lỗi dữ liệu");
-                return;
-            }
-
-            // 5. Nếu mọi thứ hợp lệ, tiến hành lưu vào Database
-            // Sử dụng định dạng yyyy-MM-dd để SQL hiểu đúng, còn hiển thị vẫn là dd/MM/yyyy
-            string sqlNgaySinh = ngaySinh.ToString("yyyy-MM-dd");
-
-            string query = $"INSERT INTO HoiVien (HoTen, NgaySinh, GioiTinh, SDT) " +
-                           $"VALUES (N'{hoTen}', '{sqlNgaySinh}', N'{gioiTinh}', '{sdt}')";
-
-            if (db.ExecuteNonQuery(query) > 0)
-            {
-                MessageBox.Show("Thêm hội viên thành công!", "Thành công");
-                LoadData(); // Nạp lại bảng
-                ClearInputs(); // Xóa trắng các ô nhập
+                MessageBox.Show("Thêm hội viên thành công!");
+                LoadData();
+                ClearForm();
             }
         }
+
         private void btnSua_Click(object sender, EventArgs e)
         {
-            // Lấy MaHV từ dòng đang chọn trong DataGridView
-            string maHV = dgvHoiVien.CurrentRow.Cells["MaHV"].Value.ToString();
+            if (dgvHoiVien.CurrentRow == null || !ValidateInputs()) return;
 
-            string query = $"UPDATE HoiVien SET HoTen = N'{txtHoTen.Text}', " +
-                           $"NgaySinh = '{dtpNgaySinh.Value.ToString("yyyy-MM-dd")}', " +
-                           $"GioiTinh = N'{cboGioiTinh.Text}', SDT = '{txtSDT.Text}' " +
-                           $"WHERE MaHV = {maHV}";
-
-            if (db.ExecuteNonQuery(query) > 0)
+            string maHV = txtMaHV.Text;
+            if (IsSdtDuplicate(txtSDT.Text.Trim(), maHV))
             {
-                MessageBox.Show("Cập nhật thành công!");
+                MessageBox.Show("SĐT bị trùng với người khác!");
+                return;
+            }
+
+            string sql = $@"UPDATE HoiVien SET 
+                            HoTen = N'{txtHoTen.Text.Trim()}', 
+                            NgaySinh = '{dtpNgaySinh.Value:yyyy-MM-dd}', 
+                            GioiTinh = N'{cboGioiTinh.Text}', 
+                            SDT = '{txtSDT.Text.Trim()}' 
+                            WHERE MaHV = {maHV}";
+
+            if (db.ExecuteNonQuery(sql) > 0)
+            {
+                MessageBox.Show("Cập nhật thông tin thành công!");
                 LoadData();
             }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            string maHV = dgvHoiVien.CurrentRow.Cells["MaHV"].Value.ToString();
+            if (dgvHoiVien.CurrentRow == null) return;
+            string maHV = txtMaHV.Text;
 
-            if (MessageBox.Show("Bạn có chắc chắn muốn xóa hội viên này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Xóa hội viên sẽ mất toàn bộ lịch sử tập luyện. Bạn chắc chứ?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
             {
-                string query = $"DELETE FROM HoiVien WHERE MaHV = {maHV}";
-                db.ExecuteNonQuery(query);
+                db.ExecuteNonQuery($"DELETE FROM HoiVien WHERE MaHV = {maHV}");
                 LoadData();
-                ClearInputs();
+                ClearForm();
             }
         }
 
-        // Hàm xóa trắng các ô nhập liệu
-        void ClearInputs()
+        #endregion
+
+        #region --- HÀM HỖ TRỢ (HELPER) ---
+
+        private bool ValidateInputs()
         {
+            if (string.IsNullOrWhiteSpace(txtHoTen.Text) || txtSDT.Text.Length != 10)
+            {
+                MessageBox.Show("Vui lòng nhập đúng Tên và SĐT (10 số)!");
+                return false;
+            }
+            if (cboGioiTinh.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn giới tính!");
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsSdtDuplicate(string sdt, string maHV = "")
+        {
+            string sql = (string.IsNullOrEmpty(maHV))
+                ? $"SELECT COUNT(*) FROM HoiVien WHERE SDT = '{sdt}'"
+                : $"SELECT COUNT(*) FROM HoiVien WHERE SDT = '{sdt}' AND MaHV <> {maHV}";
+
+            return Convert.ToInt32(db.ExecuteQuery(sql).Rows[0][0]) > 0;
+        }
+
+        private void ClearForm()
+        {
+            txtMaHV.Clear();
             txtHoTen.Clear();
             txtSDT.Clear();
             cboGioiTinh.SelectedIndex = -1;
             dtpNgaySinh.Value = DateTime.Now;
         }
 
-        // Sự kiện Click vào một ô/dòng trên DataGridView
         private void dgvHoiVien_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Kiểm tra nếu người dùng nhấn vào một dòng hợp lệ (tránh nhấn vào tiêu đề cột)
             if (e.RowIndex >= 0)
             {
-                // Lấy dòng hiện tại đang được nhấn
-                DataGridViewRow row = dgvHoiVien.Rows[e.RowIndex];
-
-                // Đổ dữ liệu từ các cột của dòng đó vào các Control tương ứng
-                // Lưu ý: Tên cột trong ngoặc ["..."] phải khớp chính xác với tên cột trong CSDL
-                txtHoTen.Text = row.Cells["HoTen"].Value.ToString();
-
-                // Xử lý ngày sinh (Chuyển từ dữ liệu trong bảng sang kiểu DateTime)
-                if (row.Cells["NgaySinh"].Value != DBNull.Value)
-                {
-                    dtpNgaySinh.Value = Convert.ToDateTime(row.Cells["NgaySinh"].Value);
-                }
-
-                cboGioiTinh.Text = row.Cells["GioiTinh"].Value.ToString();
-                txtSDT.Text = row.Cells["SDT"].Value.ToString();
-
-                // Nếu em có dùng một Label hoặc TextBox ẩn để giữ MaHV (dùng khi Sửa/Xóa)
-                // txtMaHV.Text = row.Cells["MaHV"].Value.ToString();
+                DataGridViewRow r = dgvHoiVien.Rows[e.RowIndex];
+                txtMaHV.Text = r.Cells["MaHV"].Value?.ToString();
+                txtHoTen.Text = r.Cells["HoTen"].Value?.ToString();
+                txtSDT.Text = r.Cells["SDT"].Value?.ToString();
+                cboGioiTinh.Text = r.Cells["GioiTinh"].Value?.ToString();
+                if (r.Cells["NgaySinh"].Value != DBNull.Value)
+                    dtpNgaySinh.Value = Convert.ToDateTime(r.Cells["NgaySinh"].Value);
             }
         }
 
-        private void btnLamMoi_Click(object sender, EventArgs e)
+        // Vẫn giữ CellFormatting để lễ tân nhìn bảng là biết ai hết hạn để nhắc đi gia hạn
+        private void dgvHoiVien_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            txtHoTen.Clear();
-            txtSDT.Clear();
-            cboGioiTinh.SelectedIndex = -1; // Bỏ chọn ComboBox
-            dtpNgaySinh.Value = DateTime.Now; // Đưa ngày về hiện tại
+            if (dgvHoiVien.Columns[e.ColumnIndex].Name == "NgayHetHan" && e.Value != null && e.Value != DBNull.Value)
+            {
+                DateTime han = Convert.ToDateTime(e.Value);
+                if (han < DateTime.Now)
+                {
+                    e.CellStyle.ForeColor = Color.Red;
+                    e.CellStyle.Font = new Font(dgvHoiVien.Font, FontStyle.Bold);
+                }
+                else if ((han - DateTime.Now).TotalDays <= 3)
+                {
+                    e.CellStyle.ForeColor = Color.OrangeRed;
+                }
+            }
         }
 
+        private void txtHoTen_KeyPress(object sender, KeyPressEventArgs e) => e.Handled = !char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar);
+        private void txtSDT_KeyPress(object sender, KeyPressEventArgs e) => e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+
+        #endregion
     }
-}   
+}

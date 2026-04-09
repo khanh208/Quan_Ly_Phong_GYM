@@ -46,6 +46,7 @@
             this.lblTimKiem = new System.Windows.Forms.Label();
             this.txtSearchGoiTap = new System.Windows.Forms.TextBox();
             this.dgvGoiTap = new System.Windows.Forms.DataGridView();
+            this.txtMaGoi = new System.Windows.Forms.TextBox();
             this.pnlInput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThoiHan)).BeginInit();
             this.pnlData.SuspendLayout();
@@ -91,6 +92,7 @@
             // 
             // pnlInput
             // 
+            this.pnlInput.Controls.Add(this.txtMaGoi);
             this.pnlInput.Controls.Add(this.btnLamMoi);
             this.pnlInput.Controls.Add(this.btnXoa);
             this.pnlInput.Controls.Add(this.btnSua);
@@ -239,6 +241,16 @@
             this.dgvGoiTap.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGoiTap.Size = new System.Drawing.Size(769, 649);
             this.dgvGoiTap.TabIndex = 1;
+            this.dgvGoiTap.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoiTap_CellClick);
+            // 
+            // txtMaGoi
+            // 
+            this.txtMaGoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtMaGoi.Location = new System.Drawing.Point(226, 36);
+            this.txtMaGoi.Name = "txtMaGoi";
+            this.txtMaGoi.Size = new System.Drawing.Size(179, 30);
+            this.txtMaGoi.TabIndex = 17;
+            this.txtMaGoi.Visible = false;
             // 
             // ucGoiTap
             // 
@@ -279,5 +291,6 @@
         private System.Windows.Forms.DataGridView dgvGoiTap;
         private System.Windows.Forms.Panel pnlSearchArea;
         private System.Windows.Forms.Label lblTimKiem;
+        private System.Windows.Forms.TextBox txtMaGoi;
     }
 }

@@ -38,8 +38,8 @@
             this.btnInVe = new System.Windows.Forms.Button();
             this.dgvVeNgay = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtGhiChu = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVeNgay)).BeginInit();
             this.panel1.SuspendLayout();
@@ -48,7 +48,7 @@
             // numSoLuong
             // 
             this.numSoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.numSoLuong.Location = new System.Drawing.Point(255, 75);
+            this.numSoLuong.Location = new System.Drawing.Point(255, 125);
             this.numSoLuong.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -73,7 +73,7 @@
             // 
             this.lblSoLuong.AutoSize = true;
             this.lblSoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblSoLuong.Location = new System.Drawing.Point(97, 77);
+            this.lblSoLuong.Location = new System.Drawing.Point(97, 130);
             this.lblSoLuong.Name = "lblSoLuong";
             this.lblSoLuong.Size = new System.Drawing.Size(96, 25);
             this.lblSoLuong.TabIndex = 1;
@@ -82,7 +82,7 @@
             // txtDonGia
             // 
             this.txtDonGia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtDonGia.Location = new System.Drawing.Point(255, 139);
+            this.txtDonGia.Location = new System.Drawing.Point(255, 180);
             this.txtDonGia.Name = "txtDonGia";
             this.txtDonGia.Size = new System.Drawing.Size(190, 30);
             this.txtDonGia.TabIndex = 2;
@@ -93,7 +93,7 @@
             // 
             this.lblDonGia.AutoSize = true;
             this.lblDonGia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblDonGia.Location = new System.Drawing.Point(97, 142);
+            this.lblDonGia.Location = new System.Drawing.Point(97, 185);
             this.lblDonGia.Name = "lblDonGia";
             this.lblDonGia.Size = new System.Drawing.Size(141, 25);
             this.lblDonGia.TabIndex = 3;
@@ -103,7 +103,7 @@
             // 
             this.lblThanhTien.AutoSize = true;
             this.lblThanhTien.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblThanhTien.Location = new System.Drawing.Point(250, 212);
+            this.lblThanhTien.Location = new System.Drawing.Point(250, 239);
             this.lblThanhTien.Name = "lblThanhTien";
             this.lblThanhTien.Size = new System.Drawing.Size(70, 25);
             this.lblThanhTien.TabIndex = 4;
@@ -113,7 +113,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label1.Location = new System.Drawing.Point(97, 212);
+            this.label1.Location = new System.Drawing.Point(97, 239);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 25);
             this.label1.TabIndex = 5;
@@ -154,7 +154,13 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.numSoLuong);
+            this.panel1.Controls.Add(this.lblSoLuong);
+            this.panel1.Controls.Add(this.txtDonGia);
+            this.panel1.Controls.Add(this.lblDonGia);
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.txtGhiChu);
+            this.panel1.Controls.Add(this.lblThanhTien);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.btnInVe);
             this.panel1.Controls.Add(this.btnXacNhan);
@@ -164,44 +170,38 @@
             this.panel1.Size = new System.Drawing.Size(508, 769);
             this.panel1.TabIndex = 9;
             // 
+            // txtGhiChu
+            // 
+            this.txtGhiChu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtGhiChu.Location = new System.Drawing.Point(255, 289);
+            this.txtGhiChu.Name = "txtGhiChu";
+            this.txtGhiChu.Size = new System.Drawing.Size(190, 30);
+            this.txtGhiChu.TabIndex = 10;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label2.Location = new System.Drawing.Point(97, 279);
+            this.label2.Location = new System.Drawing.Point(97, 292);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 25);
             this.label2.TabIndex = 10;
             this.label2.Text = "Ghi chú:";
-            // 
-            // txtGhiChu
-            // 
-            this.txtGhiChu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtGhiChu.Location = new System.Drawing.Point(255, 276);
-            this.txtGhiChu.Name = "txtGhiChu";
-            this.txtGhiChu.Size = new System.Drawing.Size(190, 30);
-            this.txtGhiChu.TabIndex = 10;
             // 
             // ucKhachVangLai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dgvVeNgay);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblThanhTien);
-            this.Controls.Add(this.lblDonGia);
-            this.Controls.Add(this.txtDonGia);
-            this.Controls.Add(this.lblSoLuong);
-            this.Controls.Add(this.numSoLuong);
             this.Controls.Add(this.panel1);
             this.Name = "ucKhachVangLai";
             this.Size = new System.Drawing.Size(1494, 769);
+            this.Load += new System.EventHandler(this.ucKhachVangLai_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVeNgay)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

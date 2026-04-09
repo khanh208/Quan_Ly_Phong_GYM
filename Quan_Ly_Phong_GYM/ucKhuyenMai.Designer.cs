@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblMoTa = new System.Windows.Forms.Label();
+            this.txtMoTa = new System.Windows.Forms.TextBox();
+            this.dtpKetThuc = new System.Windows.Forms.DateTimePicker();
+            this.lblBatDau = new System.Windows.Forms.Label();
             this.dtpBatDau = new System.Windows.Forms.DateTimePicker();
             this.btnLamMoi = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
@@ -40,10 +44,6 @@
             this.lblTenGoi = new System.Windows.Forms.Label();
             this.txtTenKM = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lblBatDau = new System.Windows.Forms.Label();
-            this.dtpKetThuc = new System.Windows.Forms.DateTimePicker();
-            this.lblMoTa = new System.Windows.Forms.Label();
-            this.txtMoTa = new System.Windows.Forms.TextBox();
             this.dgvKhuyenMai = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPhanTram)).BeginInit();
@@ -73,6 +73,43 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(500, 577);
             this.panel1.TabIndex = 0;
+            // 
+            // lblMoTa
+            // 
+            this.lblMoTa.AutoSize = true;
+            this.lblMoTa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.lblMoTa.Location = new System.Drawing.Point(50, 330);
+            this.lblMoTa.Name = "lblMoTa";
+            this.lblMoTa.Size = new System.Drawing.Size(67, 25);
+            this.lblMoTa.TabIndex = 33;
+            this.lblMoTa.Text = "Mô tả:";
+            // 
+            // txtMoTa
+            // 
+            this.txtMoTa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtMoTa.Location = new System.Drawing.Point(238, 325);
+            this.txtMoTa.Name = "txtMoTa";
+            this.txtMoTa.Size = new System.Drawing.Size(179, 30);
+            this.txtMoTa.TabIndex = 32;
+            // 
+            // dtpKetThuc
+            // 
+            this.dtpKetThuc.CustomFormat = "dd/MM/yyyy";
+            this.dtpKetThuc.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpKetThuc.Location = new System.Drawing.Point(238, 268);
+            this.dtpKetThuc.Name = "dtpKetThuc";
+            this.dtpKetThuc.Size = new System.Drawing.Size(179, 30);
+            this.dtpKetThuc.TabIndex = 31;
+            // 
+            // lblBatDau
+            // 
+            this.lblBatDau.AutoSize = true;
+            this.lblBatDau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.lblBatDau.Location = new System.Drawing.Point(50, 206);
+            this.lblBatDau.Name = "lblBatDau";
+            this.lblBatDau.Size = new System.Drawing.Size(85, 25);
+            this.lblBatDau.TabIndex = 30;
+            this.lblBatDau.Text = "Bắt đầu:";
             // 
             // dtpBatDau
             // 
@@ -182,43 +219,6 @@
             this.panel2.Size = new System.Drawing.Size(911, 577);
             this.panel2.TabIndex = 1;
             // 
-            // lblBatDau
-            // 
-            this.lblBatDau.AutoSize = true;
-            this.lblBatDau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblBatDau.Location = new System.Drawing.Point(50, 206);
-            this.lblBatDau.Name = "lblBatDau";
-            this.lblBatDau.Size = new System.Drawing.Size(85, 25);
-            this.lblBatDau.TabIndex = 30;
-            this.lblBatDau.Text = "Bắt đầu:";
-            // 
-            // dtpKetThuc
-            // 
-            this.dtpKetThuc.CustomFormat = "dd/MM/yyyy";
-            this.dtpKetThuc.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpKetThuc.Location = new System.Drawing.Point(238, 268);
-            this.dtpKetThuc.Name = "dtpKetThuc";
-            this.dtpKetThuc.Size = new System.Drawing.Size(179, 30);
-            this.dtpKetThuc.TabIndex = 31;
-            // 
-            // lblMoTa
-            // 
-            this.lblMoTa.AutoSize = true;
-            this.lblMoTa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblMoTa.Location = new System.Drawing.Point(50, 330);
-            this.lblMoTa.Name = "lblMoTa";
-            this.lblMoTa.Size = new System.Drawing.Size(67, 25);
-            this.lblMoTa.TabIndex = 33;
-            this.lblMoTa.Text = "Mô tả:";
-            // 
-            // txtMoTa
-            // 
-            this.txtMoTa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtMoTa.Location = new System.Drawing.Point(238, 325);
-            this.txtMoTa.Name = "txtMoTa";
-            this.txtMoTa.Size = new System.Drawing.Size(179, 30);
-            this.txtMoTa.TabIndex = 32;
-            // 
             // dgvKhuyenMai
             // 
             this.dgvKhuyenMai.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -229,6 +229,7 @@
             this.dgvKhuyenMai.RowTemplate.Height = 24;
             this.dgvKhuyenMai.Size = new System.Drawing.Size(911, 577);
             this.dgvKhuyenMai.TabIndex = 0;
+            this.dgvKhuyenMai.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKhuyenMai_CellClick);
             // 
             // ucKhuyenMai
             // 

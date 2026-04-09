@@ -16,7 +16,12 @@ namespace Quan_Ly_Phong_GYM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            frmLogin login = new frmLogin();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new Form1()); // Chỉ chạy Form chính nếu Login trả về OK
+            }
         }
     }
 }

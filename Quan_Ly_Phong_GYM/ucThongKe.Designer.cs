@@ -43,6 +43,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.blTongDoanhThu = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cboNhanVien = new System.Windows.Forms.ComboBox();
+            this.btnExportExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).BeginInit();
             this.panel1.SuspendLayout();
@@ -55,7 +58,7 @@
             this.dtpTuNgay.CustomFormat = "d/MM/yyyy";
             this.dtpTuNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.dtpTuNgay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpTuNgay.Location = new System.Drawing.Point(251, 57);
+            this.dtpTuNgay.Location = new System.Drawing.Point(251, 99);
             this.dtpTuNgay.Name = "dtpTuNgay";
             this.dtpTuNgay.Size = new System.Drawing.Size(203, 30);
             this.dtpTuNgay.TabIndex = 0;
@@ -64,7 +67,7 @@
             // 
             this.lblNgayBatDau.AutoSize = true;
             this.lblNgayBatDau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblNgayBatDau.Location = new System.Drawing.Point(47, 62);
+            this.lblNgayBatDau.Location = new System.Drawing.Point(47, 104);
             this.lblNgayBatDau.Name = "lblNgayBatDau";
             this.lblNgayBatDau.Size = new System.Drawing.Size(134, 25);
             this.lblNgayBatDau.TabIndex = 1;
@@ -74,7 +77,7 @@
             // 
             this.lblNgayKetThuc.AutoSize = true;
             this.lblNgayKetThuc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblNgayKetThuc.Location = new System.Drawing.Point(47, 128);
+            this.lblNgayKetThuc.Location = new System.Drawing.Point(47, 148);
             this.lblNgayKetThuc.Name = "lblNgayKetThuc";
             this.lblNgayKetThuc.Size = new System.Drawing.Size(137, 25);
             this.lblNgayKetThuc.TabIndex = 2;
@@ -86,7 +89,7 @@
             this.dtpDenNgay.CustomFormat = "d/MM/yyyy";
             this.dtpDenNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.dtpDenNgay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDenNgay.Location = new System.Drawing.Point(251, 123);
+            this.dtpDenNgay.Location = new System.Drawing.Point(251, 143);
             this.dtpDenNgay.Name = "dtpDenNgay";
             this.dtpDenNgay.Size = new System.Drawing.Size(203, 30);
             this.dtpDenNgay.TabIndex = 3;
@@ -94,11 +97,11 @@
             // btnLoc
             // 
             this.btnLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnLoc.Location = new System.Drawing.Point(563, 119);
+            this.btnLoc.Location = new System.Drawing.Point(542, 139);
             this.btnLoc.Name = "btnLoc";
-            this.btnLoc.Size = new System.Drawing.Size(148, 34);
+            this.btnLoc.Size = new System.Drawing.Size(236, 34);
             this.btnLoc.TabIndex = 4;
-            this.btnLoc.Text = "Thống Kê";
+            this.btnLoc.Text = "Thống Kê Doanh Thu";
             this.btnLoc.UseVisualStyleBackColor = true;
             this.btnLoc.Click += new System.EventHandler(this.btnLoc_Click);
             // 
@@ -169,6 +172,9 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnExportExcel);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.cboNhanVien);
             this.panel2.Controls.Add(this.chartDoanhThu);
             this.panel2.Controls.Add(this.btnLoc);
             this.panel2.Controls.Add(this.lblTongDoanhThu);
@@ -183,6 +189,36 @@
             this.panel2.Size = new System.Drawing.Size(814, 801);
             this.panel2.TabIndex = 10;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label2.Location = new System.Drawing.Point(47, 57);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 25);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Nhân viên:";
+            // 
+            // cboNhanVien
+            // 
+            this.cboNhanVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.cboNhanVien.FormattingEnabled = true;
+            this.cboNhanVien.Location = new System.Drawing.Point(251, 49);
+            this.cboNhanVien.Name = "cboNhanVien";
+            this.cboNhanVien.Size = new System.Drawing.Size(203, 33);
+            this.cboNhanVien.TabIndex = 8;
+            // 
+            // btnExportExcel
+            // 
+            this.btnExportExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnExportExcel.Location = new System.Drawing.Point(542, 79);
+            this.btnExportExcel.Name = "btnExportExcel";
+            this.btnExportExcel.Size = new System.Drawing.Size(236, 34);
+            this.btnExportExcel.TabIndex = 10;
+            this.btnExportExcel.Text = "Xuất file excel";
+            this.btnExportExcel.UseVisualStyleBackColor = true;
+            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
+            // 
             // ucThongKe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -192,6 +228,7 @@
             this.Controls.Add(this.panel2);
             this.Name = "ucThongKe";
             this.Size = new System.Drawing.Size(1443, 801);
+            this.Load += new System.EventHandler(this.ucThongKe_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -216,5 +253,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label blTongDoanhThu;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ComboBox cboNhanVien;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnExportExcel;
     }
 }

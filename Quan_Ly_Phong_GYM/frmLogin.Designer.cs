@@ -28,29 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.txtPass = new System.Windows.Forms.TextBox();
+            this.txtUser = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // txtPassword
+            // txtPass
             // 
-            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.txtPassword.Location = new System.Drawing.Point(217, 109);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(218, 32);
-            this.txtPassword.TabIndex = 0;
-            this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.txtPass.Location = new System.Drawing.Point(217, 109);
+            this.txtPass.Name = "txtPass";
+            this.txtPass.Size = new System.Drawing.Size(218, 32);
+            this.txtPass.TabIndex = 0;
+            this.txtPass.UseSystemPasswordChar = true;
             // 
-            // txtUsername
+            // txtUser
             // 
-            this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.txtUsername.Location = new System.Drawing.Point(217, 48);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(218, 32);
-            this.txtUsername.TabIndex = 1;
+            this.txtUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.txtUser.Location = new System.Drawing.Point(217, 48);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(218, 32);
+            this.txtUser.TabIndex = 1;
             // 
             // label1
             // 
@@ -74,17 +74,18 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Mật khẩu:";
             // 
-            // button1
+            // btnLogin
             // 
-            this.button1.BackColor = System.Drawing.Color.MediumPurple;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(137, 206);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(147, 37);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Đăng nhập";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnLogin.BackColor = System.Drawing.Color.MediumPurple;
+            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.btnLogin.ForeColor = System.Drawing.Color.White;
+            this.btnLogin.Location = new System.Drawing.Point(137, 206);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(147, 37);
+            this.btnLogin.TabIndex = 4;
+            this.btnLogin.Text = "Đăng nhập";
+            this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // frmLogin
             // 
@@ -92,11 +93,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtUsername);
-            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.txtUser);
+            this.Controls.Add(this.txtPass);
             this.Name = "frmLogin";
             this.Text = "frmLogin";
             this.ResumeLayout(false);
@@ -106,10 +107,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.TextBox txtUsername;
+        private System.Windows.Forms.TextBox txtPass;
+        private System.Windows.Forms.TextBox txtUser;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnLogin;
     }
 }

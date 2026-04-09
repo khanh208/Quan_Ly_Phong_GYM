@@ -47,6 +47,10 @@
             this.dgvDangKy = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnThanhToan = new System.Windows.Forms.Button();
+            this.btnCapNhatHLV = new System.Windows.Forms.Button();
+            this.btnGiaHan = new System.Windows.Forms.Button();
+            this.lblTimKiem = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDangKy)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -212,16 +216,18 @@
             // dgvDangKy
             // 
             this.dgvDangKy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDangKy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvDangKy.Location = new System.Drawing.Point(444, 0);
+            this.dgvDangKy.Location = new System.Drawing.Point(450, 55);
             this.dgvDangKy.Name = "dgvDangKy";
             this.dgvDangKy.RowHeadersWidth = 51;
             this.dgvDangKy.RowTemplate.Height = 24;
-            this.dgvDangKy.Size = new System.Drawing.Size(1019, 768);
+            this.dgvDangKy.Size = new System.Drawing.Size(1013, 713);
             this.dgvDangKy.TabIndex = 16;
+            this.dgvDangKy.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDangKy_CellClick);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnGiaHan);
+            this.panel1.Controls.Add(this.btnCapNhatHLV);
             this.panel1.Controls.Add(this.btnThanhToan);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -232,18 +238,62 @@
             // btnThanhToan
             // 
             this.btnThanhToan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnThanhToan.Location = new System.Drawing.Point(117, 617);
+            this.btnThanhToan.Location = new System.Drawing.Point(52, 628);
             this.btnThanhToan.Name = "btnThanhToan";
-            this.btnThanhToan.Size = new System.Drawing.Size(165, 41);
+            this.btnThanhToan.Size = new System.Drawing.Size(162, 41);
             this.btnThanhToan.TabIndex = 0;
-            this.btnThanhToan.Text = "Thanh toán";
+            this.btnThanhToan.Text = "Mua gói tập";
             this.btnThanhToan.UseVisualStyleBackColor = true;
             this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
+            // 
+            // btnCapNhatHLV
+            // 
+            this.btnCapNhatHLV.Enabled = false;
+            this.btnCapNhatHLV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnCapNhatHLV.Location = new System.Drawing.Point(128, 686);
+            this.btnCapNhatHLV.Name = "btnCapNhatHLV";
+            this.btnCapNhatHLV.Size = new System.Drawing.Size(175, 41);
+            this.btnCapNhatHLV.TabIndex = 1;
+            this.btnCapNhatHLV.Text = "Cập nhật HLV:";
+            this.btnCapNhatHLV.UseVisualStyleBackColor = true;
+            this.btnCapNhatHLV.Click += new System.EventHandler(this.btnCapNhatHLV_Click);
+            // 
+            // btnGiaHan
+            // 
+            this.btnGiaHan.Enabled = false;
+            this.btnGiaHan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnGiaHan.Location = new System.Drawing.Point(234, 628);
+            this.btnGiaHan.Name = "btnGiaHan";
+            this.btnGiaHan.Size = new System.Drawing.Size(162, 41);
+            this.btnGiaHan.TabIndex = 2;
+            this.btnGiaHan.Text = "Gia hạn gói tập";
+            this.btnGiaHan.UseVisualStyleBackColor = true;
+            this.btnGiaHan.Click += new System.EventHandler(this.btnGiaHan_Click);
+            // 
+            // lblTimKiem
+            // 
+            this.lblTimKiem.AutoSize = true;
+            this.lblTimKiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.lblTimKiem.Location = new System.Drawing.Point(557, 17);
+            this.lblTimKiem.Name = "lblTimKiem";
+            this.lblTimKiem.Size = new System.Drawing.Size(101, 25);
+            this.lblTimKiem.TabIndex = 19;
+            this.lblTimKiem.Text = "Tìm Kiếm:";
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtSearch.Location = new System.Drawing.Point(664, 14);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(491, 30);
+            this.txtSearch.TabIndex = 18;
             // 
             // ucDangKy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblTimKiem);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.dgvDangKy);
             this.Controls.Add(this.lblGhiChu);
             this.Controls.Add(this.txtGhiChu);
@@ -292,5 +342,9 @@
         private System.Windows.Forms.DataGridView dgvDangKy;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnThanhToan;
+        private System.Windows.Forms.Button btnCapNhatHLV;
+        private System.Windows.Forms.Button btnGiaHan;
+        private System.Windows.Forms.Label lblTimKiem;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }

@@ -107,15 +107,33 @@ namespace Quan_Ly_Phong_GYM
         // 5. Hiển thị ngược dữ liệu khi Click vào bảng
         private void dgvGoiTap_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            // Kiểm tra xem người dùng có click vào dòng dữ liệu không (tránh click vào tiêu đề)
             if (e.RowIndex >= 0)
             {
+                // Lấy dòng hiện tại đang được chọn
                 DataGridViewRow row = dgvGoiTap.Rows[e.RowIndex];
-                txtTenGoi.Text = row.Cells["TenGoi"].Value.ToString();
-                txtGia.Text = row.Cells["Gia"].Value.ToString();
-                numThoiHan.Value = Convert.ToDecimal(row.Cells["ThoiHan"].Value);
 
-                // Tránh lỗi nếu giá trị GhiChu bị null
+                // 1. Đổ Mã Gói vào ô ẩn (Dùng để làm điều kiện WHERE khi Sửa/Xóa)
+                // Nếu em chưa có txtMaGoi thì có thể bỏ qua dòng này hoặc tạo thêm
+                if (dgvGoiTap.Columns["MaGoi"] != null)
+                    txtMaGoi.Text = row.Cells["MaGoi"].Value?.ToString();
+
+                // 2. Đổ thông tin chi tiết vào các ô nhập liệu
+                txtTenGoi.Text = row.Cells["TenGoi"].Value?.ToString();
+
+                // Lấy giá trị tiền và xóa định dạng dấu phẩy nếu có để đưa vào TextBox
+                txtGia.Text = row.Cells["Gia"].Value?.ToString();
+
+                // Đổ thời hạn vào NumericUpDown
+                if (row.Cells["ThoiHan"].Value != null)
+                    numThoiHan.Value = Convert.ToDecimal(row.Cells["ThoiHan"].Value);
+
+                // Đổ Ghi chú (Xử lý nếu bị Null)
                 txtGhiChu.Text = row.Cells["GhiChu"].Value?.ToString() ?? "";
+
+                // Mẹo nhỏ: Khi đã click vào bảng, có thể tắt nút "Thêm" và hiện nút "Sửa" 
+                // để người dùng không bấm nhầm tạo mới khi đang muốn sửa.
+                btnThem.Enabled = false;
             }
         }
 
@@ -159,10 +177,14 @@ namespace Quan_Ly_Phong_GYM
 
         private void ClearInputs()
         {
+            txtMaGoi.Clear(); // Xóa cả ID cũ
             txtTenGoi.Clear();
             txtGia.Clear();
-            txtGhiChu.Clear(); // Thêm xóa ghi chú
+            txtGhiChu.Clear();
             numThoiHan.Value = 30;
+
+            // Mở lại nút thêm để người dùng có thể nhập gói mới
+            btnThem.Enabled = true;
         }
 
         private void txtSearchGoiTap_TextChanged(object sender, EventArgs e)

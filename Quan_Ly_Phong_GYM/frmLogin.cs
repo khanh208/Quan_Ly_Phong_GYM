@@ -22,34 +22,29 @@ namespace Quan_Ly_Phong_GYM
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string user = txtUsername.Text.Trim();
-            string pass = txtPassword.Text.Trim();
+            DatabaseHelper db = new DatabaseHelper();
+            string user = txtUser.Text.Trim();
+            string pass = txtPass.Text.Trim();
 
-            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
+            // Truy vấn kiểm tra tài khoản và trạng thái làm việc
+            string query = $"SELECT * FROM NhanVien WHERE TenDangNhap = '{user}' AND MatKhau = '{pass}' AND TrangThai = N'Đang làm việc'";
+            DataTable dt = db.ExecuteQuery(query);
+
+            if (dt.Rows.Count > 0)
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ tài khoản và mật khẩu!", "Thông báo");
-                return;
-            }
+                // 1. Lưu thông tin vào Session
+                Session.MaNV = Convert.ToInt32(dt.Rows[0]["MaNV"]);
+                Session.HoTen = dt.Rows[0]["HoTen"].ToString();
+                Session.ChucVu = dt.Rows[0]["ChucVu"].ToString();
 
-            // Câu lệnh SQL kiểm tra sự tồn tại của tài khoản
-            // Lưu ý: Tên bảng và cột phải khớp với file Huong_dan_du_an.txt
-            string query = $"SELECT * FROM TaiKhoan WHERE Username = '{user}' AND Password = '{pass}'";
-
-            DataTable result = db.ExecuteQuery(query);
-
-            if (result.Rows.Count > 0)
-            {
-                MessageBox.Show("Đăng nhập thành công!", "Thông báo");
-
-                // Mở Form chính (ví dụ Form1) và ẩn Form đăng nhập
-                Form1 mainForm = new Form1();
-                this.Hide();
-                mainForm.ShowDialog();
+                // 2. Thông báo thành công và đóng Form Login để vào Form Chính
+                MessageBox.Show($"Chào mừng {Session.HoTen} quay trở lại!", "Đăng nhập thành công");
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi");
+                MessageBox.Show("Tài khoản hoặc mật khẩu không đúng, hoặc bạn đã nghỉ việc!", "Lỗi");
             }
         }
     }

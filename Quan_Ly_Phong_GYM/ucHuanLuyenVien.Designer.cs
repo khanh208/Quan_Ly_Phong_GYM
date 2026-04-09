@@ -42,8 +42,8 @@
             this.lblTrangThai = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.txtSearchHLV = new System.Windows.Forms.TextBox();
             this.lblTimKiem = new System.Windows.Forms.Label();
+            this.txtSearchHLV = new System.Windows.Forms.TextBox();
             this.dgvHLV = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3.SuspendLayout();
@@ -198,15 +198,6 @@
             this.panel3.Size = new System.Drawing.Size(769, 35);
             this.panel3.TabIndex = 32;
             // 
-            // txtSearchHLV
-            // 
-            this.txtSearchHLV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtSearchHLV.Location = new System.Drawing.Point(166, 3);
-            this.txtSearchHLV.Name = "txtSearchHLV";
-            this.txtSearchHLV.Size = new System.Drawing.Size(472, 30);
-            this.txtSearchHLV.TabIndex = 0;
-            this.txtSearchHLV.TextChanged += new System.EventHandler(this.txtSearchHLV_TextChanged);
-            // 
             // lblTimKiem
             // 
             this.lblTimKiem.AutoSize = true;
@@ -217,6 +208,15 @@
             this.lblTimKiem.TabIndex = 2;
             this.lblTimKiem.Text = "Tìm Kiếm:";
             // 
+            // txtSearchHLV
+            // 
+            this.txtSearchHLV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtSearchHLV.Location = new System.Drawing.Point(166, 3);
+            this.txtSearchHLV.Name = "txtSearchHLV";
+            this.txtSearchHLV.Size = new System.Drawing.Size(472, 30);
+            this.txtSearchHLV.TabIndex = 0;
+            this.txtSearchHLV.TextChanged += new System.EventHandler(this.txtSearchHLV_TextChanged);
+            // 
             // dgvHLV
             // 
             this.dgvHLV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -226,6 +226,7 @@
             this.dgvHLV.RowTemplate.Height = 24;
             this.dgvHLV.Size = new System.Drawing.Size(760, 510);
             this.dgvHLV.TabIndex = 29;
+            this.dgvHLV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHLV_CellClick);
             // 
             // panel2
             // 
