@@ -1,52 +1,95 @@
-CREATE DATABASE QL_GYM
-GO
-USE QL_GYM
-GO
-CREATE TABLE TaiKhoan (
-    Username NVARCHAR(50) NOT NULL,
-    Password NVARCHAR(50) NOT NULL,
-    Role NVARCHAR(50) NOT NULL,
-    CONSTRAINT PK_TaiKhoan PRIMARY KEY (Username)
-)
-CREATE TABLE HoiVien (
-    MaHV INT IDENTITY(1,1) NOT NULL,
-    HoTen NVARCHAR(100) NOT NULL,
-    NgaySinh DATE,
-    GioiTinh NVARCHAR(10),
-    SDT NVARCHAR(15),
-    CONSTRAINT PK_HoiVien PRIMARY KEY (MaHV)
-)
-CREATE TABLE GoiTap (
-    MaGoi INT IDENTITY(1,1) NOT NULL,
-    TenGoi NVARCHAR(100) NOT NULL,
-    Gia MONEY NOT NULL,
-    ThoiHan INT NOT NULL, -- số ngày
-    CONSTRAINT PK_GoiTap PRIMARY KEY (MaGoi)
-)
-CREATE TABLE HLV (
-    MaHLV INT IDENTITY(1,1) NOT NULL,
-    HoTen NVARCHAR(100) NOT NULL,
-    ChuyenMon NVARCHAR(100),
-    SDT NVARCHAR(15),
-    CONSTRAINT PK_HLV PRIMARY KEY (MaHLV)
-)
-CREATE TABLE DangKy (
-    MaDK INT IDENTITY(1,1) NOT NULL,
-    MaHV INT NOT NULL,
-    MaGoi INT NOT NULL,
-    MaHLV INT NOT NULL,
-    NgayDK DATE NOT NULL,
-    NgayHetHan DATE NOT NULL,
-    CONSTRAINT PK_DangKy PRIMARY KEY (MaDK),
-    CONSTRAINT FK_DangKy_HoiVien FOREIGN KEY (MaHV) REFERENCES HoiVien(MaHV),
-    CONSTRAINT FK_DangKy_GoiTap FOREIGN KEY (MaGoi) REFERENCES GoiTap(MaGoi),
-    CONSTRAINT FK_DangKy_HLV FOREIGN KEY (MaHLV) REFERENCES HLV(MaHLV)
-)
-CREATE TABLE HoaDon (
-    MaHD INT IDENTITY(1,1) NOT NULL,
-    MaDK INT NOT NULL,
-    NgayLap DATE NOT NULL,
-    TongTien MONEY NOT NULL,
-    CONSTRAINT PK_HoaDon PRIMARY KEY (MaHD),
-    CONSTRAINT FK_HoaDon_DangKy FOREIGN KEY (MaDK) REFERENCES DangKy(MaDK)
-)
+# TÀI LIỆU DỰ ÁN: PHẦN MỀM QUẢN LÝ PHÒNG GYM
+
+## PHẦN 1: HƯỚNG DẪN CÀI ĐẶT (INSTALLATION GUIDE)
+
+**1. Yêu cầu hệ thống (Prerequisites)**
+* **Hệ điều hành:** Windows 10 / Windows 11.
+* **Công cụ lập trình:** Microsoft Visual Studio 2019 hoặc 2022 (hỗ trợ .NET Framework / C# Windows Forms).
+* **Hệ quản trị CSDL:** Microsoft SQL Server (2014 trở lên) và SQL Server Management Studio (SSMS).
+* **Thư viện ngoài (NuGet Packages):** `ClosedXML` (Dùng để xuất file Excel).
+
+**2. Các bước cài đặt và cấu hình**
+* **Bước 1: Cài đặt Cơ sở dữ liệu (Database)**
+  1. Mở SQL Server Management Studio (SSMS) và kết nối vào Server của bạn.
+  2. Mở file script SQL đính kèm trong thư mục dự án (ví dụ: `Database.sql`).
+  3. Chạy lệnh (Execute - F5) để hệ thống tự động tạo Database `QL_GYM` và các bảng dữ liệu, cấu trúc khóa ngoại.
+* **Bước 2: Cấu hình chuỗi kết nối (Connection String)**
+  1. Mở thư mục source code, nháy đúp vào file `Quan_Ly_Phong_GYM.sln` để mở dự án bằng Visual Studio.
+  2. Mở file `DatabaseHelper.cs` (hoặc `App.config` tùy cấu trúc).
+  3. Tìm đến biến chứa chuỗi kết nối `connectionString`.
+  4. Thay đổi thông tin `Data Source=TEN_MAY_CUA_BAN\SQLEXPRESS` sao cho khớp với tên Server SQL trên máy tính của bạn.
+* **Bước 3: Khôi phục thư viện (Restore NuGet Packages)**
+  1. Tại Visual Studio, chuột phải vào Solution (trong cửa sổ Solution Explorer), chọn **"Restore NuGet Packages"** để tải về thư viện Excel (`ClosedXML`).
+* **Bước 4: Chạy chương trình**
+  1. Nhấn **Start** (Hoặc F5) để biên dịch và chạy phần mềm.
+  2. Sử dụng tài khoản mặc định để đăng nhập:
+     * **Tên đăng nhập:** `admin`
+     * **Mật khẩu:** `123456` (Tài khoản có toàn quyền truy cập).
+
+---
+
+## PHẦN 2: HƯỚNG DẪN SỬ DỤNG (USER MANUAL)
+
+**1. Đăng nhập & Quản lý Hệ thống**
+* **Đăng nhập:** Nhập Tên đăng nhập và Mật khẩu. Hệ thống sẽ phân quyền (Admin được dùng toàn bộ chức năng, Nhân viên không được vào màn hình Quản lý Nhân Viên).
+* **Đổi mật khẩu:** Chọn chức năng "Đổi mật khẩu", nhập mật khẩu cũ và mật khẩu mới để thay đổi.
+
+**2. Quản lý Danh mục (Hội viên, HLV, Gói tập, Nhân viên)**
+* **Thêm mới:** Điền đầy đủ thông tin vào các ô trống (Hệ thống có ràng buộc chặt chẽ: SĐT phải 10 số bắt đầu bằng 0, độ tuổi phải >10 tuổi...). Nhấn nút **"Thêm"**.
+* **Chỉnh sửa:** Nhấn chuột vào 1 dòng trên bảng danh sách, thông tin sẽ được đưa lên các ô nhập liệu. Sửa thông tin và nhấn nút **"Sửa"**.
+* **Xóa:** Chọn 1 dòng và nhấn **"Xóa"**. *Lưu ý:* Hệ thống tích hợp bảo vệ dữ liệu, không cho phép xóa các Hội viên, HLV hoặc Gói tập đã từng phát sinh giao dịch để tránh sai lệch báo cáo doanh thu. Chỉ có thể xóa dữ liệu chưa từng được sử dụng.
+
+**3. Nghiệp vụ Bán hàng & Đăng ký**
+* **Bán Gói tập cơ bản:** Chuyển sang Tab "Đăng ký". Chọn tên Hội viên, Gói tập. Hệ thống tự tính Tổng tiền và Ngày hết hạn (có tính cả cộng dồn nếu khách gia hạn). Nhấn "Thanh toán".
+* **Đăng ký PT (Huấn luyện viên):** Chuyển sang Tab "Đăng ký PT". Chọn Hội viên, HLV và số buổi (12, 30, 50 buổi). 
+  * Hệ thống tự động cảnh báo nếu 1 HLV đang kèm quá 10 khách.
+  * Nếu khách đã có gói PT với HLV này, hệ thống sẽ tự động hỏi để **Cộng dồn buổi** thay vì tạo mới.
+
+**4. Nghiệp vụ Check-in (Điểm danh)**
+* Mở giao diện "Check-in". Lễ tân có thể dùng máy quét mã vạch quét thẻ thành viên, hoặc gõ Số điện thoại của khách và nhấn Enter.
+* **Luồng xử lý tự động:**
+  * Kiểm tra xem Gói tập có còn hạn không. Nếu hết hạn -> Từ chối và cảnh báo.
+  * Tự động phát hiện xem khách có đang mua Gói PT không. Nếu có, hỏi Lễ tân xem khách có tập cùng PT hôm nay không để **Trừ 1 buổi**. Cảnh báo Lễ tân mời khách mua thêm nếu số buổi PT còn lại <= 2.
+  * Tự động lật trạng thái: Gõ lần 1 là "Check-in", gõ lần 2 là "Check-out".
+
+**5. Báo cáo & Thống kê**
+* **Dashboard:** Xem nhanh tổng quan trong tháng (Tổng doanh thu, Tổng hội viên mới, Số người đang trong phòng tập).
+* **Thống kê chi tiết:** Chọn mốc thời gian (Từ ngày - Đến ngày), lọc theo tên Nhân viên bán hàng. Xem biểu đồ trực quan và danh sách dòng tiền chi tiết.
+* **Xuất Excel:** Nhấn nút "Xuất Excel" để lưu báo cáo doanh thu ra file `.xlsx` phục vụ việc in ấn và gửi cho Quản lý.
+
+---
+
+## PHẦN 3: TÓM TẮT CÁC CHỨC NĂNG CHÍNH (FEATURE SUMMARY)
+
+Phần mềm Quản lý Phòng Gym là một giải pháp ứng dụng Desktop (WinForms) toàn diện, giúp tối ưu hóa quy trình vận hành của phòng tập, số hóa việc quản lý hội viên và kiểm soát chặt chẽ doanh thu. Hệ thống bao gồm 4 module chức năng chính:
+
+**1. Module Quản trị Hệ thống**
+* Đăng nhập và xác thực bảo mật.
+* Phân quyền người dùng (Role-based access control) theo hai cấp độ: Admin (Quản lý) và Nhân viên (Lễ tân).
+* Chức năng đổi mật khẩu cá nhân.
+
+**2. Module Quản lý Danh mục (CRUD)**
+* **Quản lý Hội viên:** Quản lý thông tin cá nhân, theo dõi ngày hết hạn gói tập trực quan.
+* **Quản lý Huấn luyện viên (PT):** Quản lý thông tin, chuyên môn và trạng thái làm việc.
+* **Quản lý Gói tập & Khuyến mãi:** Thiết lập bảng giá, thời hạn gói tập (1 tháng, 1 năm...) và phần trăm giảm giá.
+* **Quản lý Nhân viên:** Quản lý tài khoản đăng nhập của nhân viên nội bộ.
+
+**3. Module Nghiệp vụ Vận hành (Điểm nhấn của hệ thống)**
+* **Quản lý Bán gói tập (Membership):** Xử lý luồng đăng ký mới và gia hạn (cộng dồn ngày tập một cách thông minh).
+* **Quản lý Gói PT theo Số buổi:** Tách biệt hoàn toàn quyền lợi "Vé vào cửa" và "Thuê HLV". Quản lý HLV theo giới hạn người dùng (chống quá tải).
+* **Hệ thống Check-in thông minh:**
+  * Hỗ trợ phần cứng máy quét mã vạch (Barcode/RFID) qua thao tác phím Enter.
+  * Tự động phát hiện gói PT và trừ buổi tự động.
+  * Hệ thống cảnh báo tự động: Cảnh báo hết hạn gói, nhắc nhở nhân viên sale gia hạn khi gói PT sắp hết.
+  * Tự động dọn dẹp (Clear) dữ liệu Check-in bị treo khi qua ngày mới.
+* **Bán vé vãng lai:** Xử lý khách tập lẻ theo ngày nhanh chóng.
+
+**4. Module Báo cáo & Thống kê**
+* **Dashboard:** Màn hình điều khiển cung cấp các chỉ số vận hành real-time (thời gian thực).
+* **Thống kê Doanh thu:** Tổng hợp dòng tiền từ tất cả các nguồn (Gói tập, PT, Vé lẻ). Tích hợp chức năng lọc theo thời gian, lọc theo nhân viên tạo phiếu.
+* **Biểu đồ & Báo cáo:** Hiển thị biểu đồ cột trực quan và hỗ trợ xuất dữ liệu ra file Excel phục vụ cho kế toán.
+
+**🔥 ĐIỂM NỔI BẬT VỀ MẶT KỸ THUẬT (Technical Highlights):**
+* Áp dụng nguyên lý phòng thủ 2 lớp (UI Validation & Code Validation) giúp ngăn chặn triệt để rác dữ liệu.
+* Bắt lỗi khóa ngoại (Foreign Key Constraint Catching) mượt mà, giúp phần mềm không bao giờ bị Crash (đóng đột ngột) khi người dùng thao tác sai lệnh Xóa.
+* Thuật toán Check-in xử lý nhiều luồng dữ liệu song song (Thông tin gói + Số buổi PT + Lịch sử ra/vào).
