@@ -1,31 +1,71 @@
 # TÀI LIỆU DỰ ÁN: PHẦN MỀM QUẢN LÝ PHÒNG GYM
 
-## PHẦN 1: HƯỚNG DẪN CÀI ĐẶT (INSTALLATION GUIDE)
+## PHẦN 1: HƯỚNG DẪN CÀI ĐẶT & KẾT NỐI CƠ SỞ DỮ LIỆU CHI TIẾT
+Bước 1: Khởi tạo Cơ sở dữ liệu (Database) trên máy tính mới
 
-**1. Yêu cầu hệ thống (Prerequisites)**
-* **Hệ điều hành:** Windows 10 / Windows 11.
-* **Công cụ lập trình:** Microsoft Visual Studio 2019 hoặc 2022 (hỗ trợ .NET Framework / C# Windows Forms).
-* **Hệ quản trị CSDL:** Microsoft SQL Server (2014 trở lên) và SQL Server Management Studio (SSMS).
-* **Thư viện ngoài (NuGet Packages):** `ClosedXML` (Dùng để xuất file Excel).
+Mở phần mềm SQL Server Management Studio (SSMS) và đăng nhập vào Server trên máy của bạn.
 
-**2. Các bước cài đặt và cấu hình**
-* **Bước 1: Cài đặt Cơ sở dữ liệu (Database)**
-  1. Mở SQL Server Management Studio (SSMS) và kết nối vào Server của bạn.
-  2. Mở file script SQL đính kèm trong thư mục dự án (ví dụ: `Database.sql`).
-  3. Chạy lệnh (Execute - F5) để hệ thống tự động tạo Database `QL_GYM` và các bảng dữ liệu, cấu trúc khóa ngoại.
-* **Bước 2: Cấu hình chuỗi kết nối (Connection String)**
-  1. Mở thư mục source code, nháy đúp vào file `Quan_Ly_Phong_GYM.sln` để mở dự án bằng Visual Studio.
-  2. Mở file `DatabaseHelper.cs` (hoặc `App.config` tùy cấu trúc).
-  3. Tìm đến biến chứa chuỗi kết nối `connectionString`.
-  4. Thay đổi thông tin `Data Source=TEN_MAY_CUA_BAN\SQLEXPRESS` sao cho khớp với tên Server SQL trên máy tính của bạn.
-* **Bước 3: Khôi phục thư viện (Restore NuGet Packages)**
-  1. Tại Visual Studio, chuột phải vào Solution (trong cửa sổ Solution Explorer), chọn **"Restore NuGet Packages"** để tải về thư viện Excel (`ClosedXML`).
-* **Bước 4: Chạy chương trình**
-  1. Nhấn **Start** (Hoặc F5) để biên dịch và chạy phần mềm.
-  2. Sử dụng tài khoản mặc định để đăng nhập:
-     * **Tên đăng nhập:** `admin`
-     * **Mật khẩu:** `123456` (Tài khoản có toàn quyền truy cập).
+Tại thanh công cụ, chọn File -> Open -> File... (Hoặc bấm Ctrl + O).
 
+Điều hướng đến thư mục project, chọn file Database.sql để mở.
+
+Bấm nút Execute (hoặc phím F5) để chạy lệnh. Hệ thống sẽ tự động tạo Database có tên là QL_GYM cùng toàn bộ bảng và dữ liệu mẫu.
+
+Bước 2: Thay đổi chuỗi kết nối SQL trong Source Code (Bắt buộc)
+Do mã nguồn hiện tại đang được code cứng (hardcode) theo tên máy tính và mật khẩu của người viết, bạn bắt buộc phải sửa lại đoạn code này thì phần mềm mới chạy được trên máy tính của bạn.
+
+1. Mở file cần sửa:
+
+Mở thư mục chứa mã nguồn, nháy đúp vào file Quan_Ly_Phong_GYM.sln để mở dự án bằng Visual Studio.
+
+Nhìn sang cột Solution Explorer (thường ở bên phải màn hình), tìm và nháy đúp chuột vào file có tên là DatabaseHelper.cs.
+
+2. Tìm dòng code cần sửa:
+Trong file DatabaseHelper.cs, hãy tìm đến dòng số 10, bạn sẽ thấy đoạn code sau:
+
+C#
+private string connectionString = @"Data Source=KHANHNG208;Initial Catalog=QL_GYM;User ID=sa;Password=khanh208;TrustServerCertificate=True";
+3. Tiến hành sửa đổi:
+Bạn cần xóa đoạn code trên và thay thế bằng chuỗi kết nối của máy tính bạn. Tùy thuộc vào cách bạn đăng nhập SQL Server (SSMS), hãy chọn 1 trong 2 cách sau:
+
+👉 CÁCH A: Kết nối bằng quyền Windows (Integrated Security - Khuyên dùng nếu máy không cài mật khẩu SQL)
+Nếu khi mở SSMS, mục Authentication của bạn là Windows Authentication, hãy sửa dòng code trên thành:
+
+C#
+private string connectionString = @"Data Source=TÊN_SERVER_CỦA_BẠN;Initial Catalog=QL_GYM;Integrated Security=True;TrustServerCertificate=True";
+(Mẹo: Để lấy TÊN_SERVER_CỦA_BẠN, hãy mở SSMS, khi bảng Connect hiện lên, hãy copy toàn bộ chữ ở ô Server name).
+Ví dụ: Data Source=DESKTOP-ABC123\SQLEXPRESS;...
+
+👉 CÁCH B: Kết nối bằng tài khoản sa (SQL Server Authentication)
+Nếu khi mở SSMS, bạn phải nhập Username là sa và có Password, hãy sửa đổi các thông số Data Source và Password cho khớp với máy của bạn:
+
+C#
+private string connectionString = @"Data Source=TÊN_SERVER_CỦA_BẠN;Initial Catalog=QL_GYM;User ID=sa;Password=MẬT_KHẨU_CỦA_BẠN;TrustServerCertificate=True";
+Ví dụ, nếu Server name của bạn là .\SQLEXPRESS và mật khẩu SQL là 123456, hãy sửa thành:
+
+C#
+private string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=QL_GYM;User ID=sa;Password=123456;TrustServerCertificate=True";
+Bước 3: Khôi phục thư viện (Restore NuGet Packages)
+Vì dự án có sử dụng thư viện ngoài (ClosedXML để xuất Excel) nên máy tính mới cần tải lại thư viện này.
+
+Tại giao diện Visual Studio, nhìn sang cửa sổ Solution Explorer.
+
+Click chuột phải vào chữ Solution 'Quan_Ly_Phong_GYM' nằm trên cùng.
+
+Chọn Restore NuGet Packages. Đợi khoảng 10 giây để tải thư viện về máy (yêu cầu có kết nối mạng).
+
+Bước 4: Chạy chương trình & Đăng nhập
+
+Nhấn nút Start (Mũi tên xanh lá cây) hoặc phím F5 trên Visual Studio để chạy phần mềm.
+
+Nếu thông báo lỗi không xuất hiện và form Đăng nhập bật lên, chúc mừng bạn đã kết nối Database thành công!
+
+Sử dụng tài khoản mặc định sau để test:
+
+Tên đăng nhập: admin
+
+Mật khẩu: 123456
+(Đây là tài khoản Admin có toàn quyền truy cập toàn bộ hệ thống).
 ---
 
 ## PHẦN 2: HƯỚNG DẪN SỬ DỤNG (USER MANUAL)
