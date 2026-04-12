@@ -30,7 +30,7 @@ namespace Quan_Ly_Phong_GYM
             btnGiaHan.Enabled = editMode;      // Chọn phiếu cũ -> Gia hạn sáng
             btnCapNhatHLV.Enabled = editMode;  // Chọn phiếu cũ -> Đổi HLV sáng
 
-            // Khóa/Mở các ô nhập liệu
+            // Khóa/Mở các ô nhập liệu chính để không bị sửa nhầm khi gia hạn
             cboHoiVien.Enabled = !editMode;
             cboGoiTap.Enabled = !editMode;
         }
@@ -60,7 +60,7 @@ namespace Quan_Ly_Phong_GYM
 
         public void LoadData(string keyword = "")
         {
-            // Lấy thêm các cột Ma... để lát nữa mình gán SelectedValue cho chính xác
+            // Lấy dữ liệu từ bảng DangKy, kết nối với các bảng danh mục
             string query = @"SELECT dk.MaDK, dk.MaHV, dk.MaGoi, dk.MaHLV, dk.MaKM,
                     hv.HoTen as [Hội Viên], gt.TenGoi as [Gói Tập], 
                     hlv.HoTen as [HLV], km.TenKM as [Khuyến Mãi], 
@@ -75,18 +75,29 @@ namespace Quan_Ly_Phong_GYM
             {
                 query += $" WHERE hv.HoTen LIKE N'%{keyword}%' OR hv.SDT LIKE '%{keyword}%'";
             }
-            query += " ORDER BY dk.MaDK DESC";
+            query += " ORDER BY dk.NgayDangKy DESC";
 
             dgvDangKy.DataSource = db.ExecuteQuery(query);
 
-            // Ẩn các cột ID đi cho đẹp bảng
-            if (dgvDangKy.Columns["MaHV"] != null) dgvDangKy.Columns["MaHV"].Visible = false;
-            if (dgvDangKy.Columns["MaGoi"] != null) dgvDangKy.Columns["MaGoi"].Visible = false;
-            if (dgvDangKy.Columns["MaHLV"] != null) dgvDangKy.Columns["MaHLV"].Visible = false;
-            if (dgvDangKy.Columns["MaKM"] != null) dgvDangKy.Columns["MaKM"].Visible = false;
+            if (dgvDangKy.Columns.Count > 0)
+            {
+                // Ẩn các cột ID đi cho đẹp bảng
+                if (dgvDangKy.Columns["MaDK"] != null) dgvDangKy.Columns["MaDK"].Visible = false;
+                if (dgvDangKy.Columns["MaHV"] != null) dgvDangKy.Columns["MaHV"].Visible = false;
+                if (dgvDangKy.Columns["MaGoi"] != null) dgvDangKy.Columns["MaGoi"].Visible = false;
+                if (dgvDangKy.Columns["MaHLV"] != null) dgvDangKy.Columns["MaHLV"].Visible = false;
+                if (dgvDangKy.Columns["MaKM"] != null) dgvDangKy.Columns["MaKM"].Visible = false;
 
-            if (dgvDangKy.Columns["TongTien"] != null)
-                dgvDangKy.Columns["TongTien"].DefaultCellStyle.Format = "N0";
+                // Định dạng hiển thị
+                if (dgvDangKy.Columns["NgayDangKy"] != null)
+                    dgvDangKy.Columns["NgayDangKy"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                if (dgvDangKy.Columns["NgayHetHan"] != null)
+                    dgvDangKy.Columns["NgayHetHan"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                if (dgvDangKy.Columns["TongTien"] != null)
+                    dgvDangKy.Columns["TongTien"].DefaultCellStyle.Format = "N0";
+
+                dgvDangKy.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e) => LoadData(txtSearch.Text.Trim());
@@ -138,7 +149,6 @@ namespace Quan_Ly_Phong_GYM
                 else
                     cboKhuyenMai.SelectedIndex = -1;
 
-                // Các thông tin khác
                 txtGhiChu.Text = "Thao tác trên phiếu cũ số: " + r.Cells["MaDK"].Value.ToString();
 
                 // Chuyển sang chế độ Gia hạn/Sửa HLV
@@ -150,13 +160,13 @@ namespace Quan_Ly_Phong_GYM
 
         #region --- CÁC NÚT CHỨC NĂNG ---
 
-        // 1. MUA MỚI (Chỉ chạy khi isEditMode = false)
+        // 1. MUA MỚI
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
             LuuPhieu(false);
         }
 
-        // 2. GIA HẠN (Chỉ chạy khi chọn phiếu cũ)
+        // 2. GIA HẠN
         private void btnGiaHan_Click(object sender, EventArgs e)
         {
             LuuPhieu(true);
@@ -167,7 +177,8 @@ namespace Quan_Ly_Phong_GYM
         {
             if (cboHoiVien.SelectedIndex == -1 || cboGoiTap.SelectedIndex == -1)
             {
-                MessageBox.Show("Vui lòng chọn Hội viên và Gói tập!"); return;
+                MessageBox.Show("Vui lòng chọn Hội viên và Gói tập!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             try
@@ -177,65 +188,63 @@ namespace Quan_Ly_Phong_GYM
                 string maHLV = (cboHLV.SelectedIndex == -1) ? "NULL" : cboHLV.SelectedValue.ToString();
                 string maKM = (cboKhuyenMai.SelectedIndex == -1) ? "NULL" : cboKhuyenMai.SelectedValue.ToString();
 
-                // --- LOGIC TÍNH NGÀY BẮT ĐẦU VÀ KẾT THÚC ---
-                DateTime ngayGiaoDich = DateTime.Now; // Ngày giờ lúc ấn nút
+                // --- LOGIC TÍNH NGÀY HẾT HẠN MỚI ---
+                DateTime ngayGiaoDich = DateTime.Now;
                 DateTime ngayBatDauGoiMoi;
 
-                // 1. Lấy ngày hết hạn hiện tại của hội viên từ Database (Bảng HoiVien)
-                DataTable dtHV = db.ExecuteQuery($"SELECT NgayHetHan FROM HoiVien WHERE MaHV = {maHV}");
+                // TÌM NGÀY HẾT HẠN XA NHẤT CỦA HỘI VIÊN NÀY TRONG BẢNG ĐĂNG KÝ
+                string queryHanCu = $"SELECT MAX(NgayHetHan) AS HanCu FROM DangKy WHERE MaHV = {maHV}";
+                DataTable dtHanCu = db.ExecuteQuery(queryHanCu);
 
-                if (dtHV.Rows.Count > 0 && dtHV.Rows[0]["NgayHetHan"] != DBNull.Value)
+                if (dtHanCu.Rows.Count > 0 && dtHanCu.Rows[0]["HanCu"] != DBNull.Value)
                 {
-                    DateTime hanCu = Convert.ToDateTime(dtHV.Rows[0]["NgayHetHan"]);
+                    DateTime hanCu = Convert.ToDateTime(dtHanCu.Rows[0]["HanCu"]);
 
-                    // So sánh với thời điểm hiện tại
+                    // Nếu gói cũ vẫn còn hạn -> Cộng dồn ngày
                     if (hanCu > ngayGiaoDich)
                     {
-                        // CASE A: Vẫn còn hạn -> Ngày bắt đầu gói mới là ngày hết hạn cũ (Cộng dồn)
                         ngayBatDauGoiMoi = hanCu;
                     }
                     else
                     {
-                        // CASE B: Đã hết hạn -> Ngày bắt đầu là ngay bây giờ
+                        // Đã hết hạn -> Tính từ hôm nay
                         ngayBatDauGoiMoi = ngayGiaoDich;
                     }
                 }
                 else
                 {
-                    // Trường hợp hội viên mới chưa từng mua gói nào
+                    // Chưa từng mua gói nào
                     ngayBatDauGoiMoi = ngayGiaoDich;
                 }
 
-                // 2. Lấy số ngày của gói tập được chọn
+                // Lấy số ngày của gói tập đang chọn
                 DataTable dtGoi = db.ExecuteQuery($"SELECT ThoiHan FROM GoiTap WHERE MaGoi = {maGoi}");
                 int soNgayGoi = Convert.ToInt32(dtGoi.Rows[0]["ThoiHan"]);
 
-                // 3. Tính ngày hết hạn mới
+                // Tính ngày hết hạn cuối cùng
                 DateTime ngayHetHanMoi = ngayBatDauGoiMoi.AddDays(soNgayGoi);
 
-                // --- THỰC THI SQL ---
+                // --- THỰC THI LƯU XUỐNG CSDL ---
                 string tongTien = txtTongTien.Text.Replace(".", "").Replace(",", "");
+                if (string.IsNullOrEmpty(tongTien)) tongTien = "0";
 
-                // Lưu vào lịch sử DangKy (NgayDangKy là lúc thu tiền, NgayHetHan là hạn mới)
                 string query = $@"INSERT INTO DangKy (MaHV, MaGoi, MaHLV, MaKM, NgayDangKy, NgayHetHan, TongTien, GhiChu) 
                         VALUES ({maHV}, {maGoi}, {maHLV}, {maKM}, '{ngayGiaoDich:yyyy-MM-dd HH:mm:ss}', 
                         '{ngayHetHanMoi:yyyy-MM-dd}', {tongTien}, N'{(laGiaHan ? "Gia hạn" : "Mua mới")}')";
 
-                // Cập nhật lại hạn dùng trong bảng Hội Viên
-                string updateHV = $"UPDATE HoiVien SET NgayHetHan = '{ngayHetHanMoi:yyyy-MM-dd}' WHERE MaHV = {maHV}";
-
-                if (db.ExecuteNonQuery(query) > 0 && db.ExecuteNonQuery(updateHV) > 0)
+                // Chỉ cần Insert vào bảng DangKy, không cần Update HoiVien nữa
+                if (db.ExecuteNonQuery(query) > 0)
                 {
-                    MessageBox.Show(laGiaHan ? "Gia hạn thành công!" : "Mua gói thành công!");
+                    MessageBox.Show(laGiaHan ? $"Gia hạn thành công!\nHạn mới đến ngày: {ngayHetHanMoi:dd/MM/yyyy}" : "Mua gói tập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
                     ClearInputs();
                     SwitchMode(false);
                 }
             }
-            catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
+            catch (Exception ex) { MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        // 3. CẬP NHẬT HLV (Chỉ đổi HLV trên phiếu đang chọn)
+        // 3. CẬP NHẬT HLV 
         private void btnCapNhatHLV_Click(object sender, EventArgs e)
         {
             if (dgvDangKy.CurrentRow == null) return;
@@ -244,7 +253,7 @@ namespace Quan_Ly_Phong_GYM
 
             if (db.ExecuteNonQuery($"UPDATE DangKy SET MaHLV = {maHLV} WHERE MaDK = {maDK}") > 0)
             {
-                MessageBox.Show("Đã cập nhật HLV cho phiếu này!");
+                MessageBox.Show("Đã cập nhật HLV cho phiếu này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
             }
         }
@@ -257,10 +266,14 @@ namespace Quan_Ly_Phong_GYM
 
         private void ClearInputs()
         {
-            cboHoiVien.SelectedIndex = -1; cboGoiTap.SelectedIndex = -1;
-            cboHLV.SelectedIndex = -1; cboKhuyenMai.SelectedIndex = -1;
-            txtTongTien.Clear(); lblNgayHetHan.Text = "__/__/____";
-            txtGhiChu.Clear(); dtpNgayDK.Value = DateTime.Now;
+            cboHoiVien.SelectedIndex = -1;
+            cboGoiTap.SelectedIndex = -1;
+            cboHLV.SelectedIndex = -1;
+            cboKhuyenMai.SelectedIndex = -1;
+            txtTongTien.Clear();
+            lblNgayHetHan.Text = "__/__/____";
+            txtGhiChu.Clear();
+            dtpNgayDK.Value = DateTime.Now;
         }
         #endregion
     }

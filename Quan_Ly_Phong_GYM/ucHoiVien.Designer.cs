@@ -57,14 +57,14 @@
             this.dgvHoiVien.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvHoiVien.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHoiVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHoiVien.Location = new System.Drawing.Point(506, 48);
+            this.dgvHoiVien.Location = new System.Drawing.Point(516, 64);
             this.dgvHoiVien.Name = "dgvHoiVien";
             this.dgvHoiVien.ReadOnly = true;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -78,7 +78,7 @@
             this.dgvHoiVien.RowHeadersWidth = 51;
             this.dgvHoiVien.RowTemplate.Height = 24;
             this.dgvHoiVien.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvHoiVien.Size = new System.Drawing.Size(982, 764);
+            this.dgvHoiVien.Size = new System.Drawing.Size(1202, 984);
             this.dgvHoiVien.TabIndex = 0;
             this.dgvHoiVien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoiVien_CellClick);
             this.dgvHoiVien.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoiVien_CellClick);
@@ -220,7 +220,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(500, 812);
+            this.panel2.Size = new System.Drawing.Size(500, 1319);
             this.panel2.TabIndex = 14;
             // 
             // label1
@@ -279,7 +279,7 @@
             this.Controls.Add(this.lblHoTen);
             this.Controls.Add(this.panel2);
             this.Name = "ucHoiVien";
-            this.Size = new System.Drawing.Size(1465, 812);
+            this.Size = new System.Drawing.Size(2143, 1319);
             this.Load += new System.EventHandler(this.ucHoiVien_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHoiVien)).EndInit();
             this.panel2.ResumeLayout(false);

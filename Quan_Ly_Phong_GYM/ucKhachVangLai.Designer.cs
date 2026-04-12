@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.numSoLuong = new System.Windows.Forms.NumericUpDown();
             this.lblSoLuong = new System.Windows.Forms.Label();
             this.txtDonGia = new System.Windows.Forms.TextBox();
@@ -143,13 +145,29 @@
             // 
             // dgvVeNgay
             // 
+            this.dgvVeNgay.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVeNgay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvVeNgay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVeNgay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvVeNgay.Location = new System.Drawing.Point(508, 0);
+            this.dgvVeNgay.Location = new System.Drawing.Point(527, 75);
             this.dgvVeNgay.Name = "dgvVeNgay";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvVeNgay.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvVeNgay.RowHeadersWidth = 51;
             this.dgvVeNgay.RowTemplate.Height = 24;
-            this.dgvVeNgay.Size = new System.Drawing.Size(986, 769);
+            this.dgvVeNgay.Size = new System.Drawing.Size(1178, 812);
             this.dgvVeNgay.TabIndex = 8;
             // 
             // panel1
@@ -167,7 +185,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(508, 769);
+            this.panel1.Size = new System.Drawing.Size(508, 1041);
             this.panel1.TabIndex = 9;
             // 
             // txtGhiChu
@@ -195,7 +213,7 @@
             this.Controls.Add(this.dgvVeNgay);
             this.Controls.Add(this.panel1);
             this.Name = "ucKhachVangLai";
-            this.Size = new System.Drawing.Size(1494, 769);
+            this.Size = new System.Drawing.Size(1931, 1041);
             this.Load += new System.EventHandler(this.ucKhachVangLai_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numSoLuong)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVeNgay)).EndInit();

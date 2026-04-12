@@ -29,9 +29,8 @@ namespace Quan_Ly_Phong_GYM
                 dgvHoiVien.Columns["MaHV"].HeaderText = "Mã HV";
                 dgvHoiVien.Columns["HoTen"].HeaderText = "Họ và Tên";
                 dgvHoiVien.Columns["NgaySinh"].HeaderText = "Ngày Sinh";
-                dgvHoiVien.Columns["GioiTinh"].HeaderText = "Phái";
-                dgvHoiVien.Columns["SDT"].HeaderText = "Số điện thoại";
-                dgvHoiVien.Columns["NgayHetHan"].HeaderText = "Hạn dùng"; // Giữ lại để xem trạng thái
+                dgvHoiVien.Columns["GioiTinh"].HeaderText = "Giới tính";
+                dgvHoiVien.Columns["SDT"].HeaderText = "Số điện thoại";// Giữ lại để xem trạng thái
 
                 dgvHoiVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }

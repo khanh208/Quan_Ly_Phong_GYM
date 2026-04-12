@@ -30,13 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.lblTongHoiVien = new System.Windows.Forms.Label();
-            this.lblDoanhThuThang = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.lblHoiVienDangTap = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.lblSapHetHan = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.lblDoanhThuThang = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
@@ -49,37 +49,10 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Lime;
             this.panel1.Controls.Add(this.lblTongHoiVien);
-            this.panel1.Location = new System.Drawing.Point(21, 80);
+            this.panel1.Location = new System.Drawing.Point(44, 111);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(716, 309);
+            this.panel1.Size = new System.Drawing.Size(826, 361);
             this.panel1.TabIndex = 0;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Orange;
-            this.panel2.Controls.Add(this.lblHoiVienDangTap);
-            this.panel2.Location = new System.Drawing.Point(21, 395);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(686, 336);
-            this.panel2.TabIndex = 1;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.Red;
-            this.panel3.Controls.Add(this.lblSapHetHan);
-            this.panel3.Location = new System.Drawing.Point(713, 422);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(719, 309);
-            this.panel3.TabIndex = 2;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.DodgerBlue;
-            this.panel4.Controls.Add(this.lblDoanhThuThang);
-            this.panel4.Location = new System.Drawing.Point(743, 80);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(686, 336);
-            this.panel4.TabIndex = 3;
             // 
             // lblTongHoiVien
             // 
@@ -92,16 +65,14 @@
             this.lblTongHoiVien.TabIndex = 0;
             this.lblTongHoiVien.Text = "TỔNG HỘI VIÊN";
             // 
-            // lblDoanhThuThang
+            // panel2
             // 
-            this.lblDoanhThuThang.AutoSize = true;
-            this.lblDoanhThuThang.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.lblDoanhThuThang.ForeColor = System.Drawing.Color.White;
-            this.lblDoanhThuThang.Location = new System.Drawing.Point(226, 0);
-            this.lblDoanhThuThang.Name = "lblDoanhThuThang";
-            this.lblDoanhThuThang.Size = new System.Drawing.Size(280, 31);
-            this.lblDoanhThuThang.TabIndex = 1;
-            this.lblDoanhThuThang.Text = "DOANH THU THÁNG";
+            this.panel2.BackColor = System.Drawing.Color.Orange;
+            this.panel2.Controls.Add(this.lblHoiVienDangTap);
+            this.panel2.Location = new System.Drawing.Point(44, 478);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(826, 357);
+            this.panel2.TabIndex = 1;
             // 
             // lblHoiVienDangTap
             // 
@@ -114,6 +85,15 @@
             this.lblHoiVienDangTap.TabIndex = 4;
             this.lblHoiVienDangTap.Text = "HỘI VIÊN ĐANG TẬP";
             // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.Red;
+            this.panel3.Controls.Add(this.lblSapHetHan);
+            this.panel3.Location = new System.Drawing.Point(889, 476);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(820, 359);
+            this.panel3.TabIndex = 2;
+            // 
             // lblSapHetHan
             // 
             this.lblSapHetHan.AutoSize = true;
@@ -125,12 +105,32 @@
             this.lblSapHetHan.TabIndex = 1;
             this.lblSapHetHan.Text = "SẮP HẾT HẠN/ ĐÃ HẾT HẠN";
             // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.DodgerBlue;
+            this.panel4.Controls.Add(this.lblDoanhThuThang);
+            this.panel4.Location = new System.Drawing.Point(889, 114);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(820, 358);
+            this.panel4.TabIndex = 3;
+            // 
+            // lblDoanhThuThang
+            // 
+            this.lblDoanhThuThang.AutoSize = true;
+            this.lblDoanhThuThang.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.lblDoanhThuThang.ForeColor = System.Drawing.Color.White;
+            this.lblDoanhThuThang.Location = new System.Drawing.Point(226, 0);
+            this.lblDoanhThuThang.Name = "lblDoanhThuThang";
+            this.lblDoanhThuThang.Size = new System.Drawing.Size(280, 31);
+            this.lblDoanhThuThang.TabIndex = 1;
+            this.lblDoanhThuThang.Text = "DOANH THU THÁNG";
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(479, 14);
+            this.label5.Location = new System.Drawing.Point(620, 37);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(511, 46);
             this.label5.TabIndex = 4;
@@ -152,7 +152,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "ucDashboard";
-            this.Size = new System.Drawing.Size(1467, 840);
+            this.Size = new System.Drawing.Size(1857, 1048);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

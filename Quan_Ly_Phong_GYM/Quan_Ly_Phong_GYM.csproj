@@ -92,6 +92,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDoiMatKhau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDoiMatKhau.Designer.cs">
+      <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,11 +107,23 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="ucCheckIn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucCheckIn.Designer.cs">
+      <DependentUpon>ucCheckIn.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucDangKy.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ucDangKy.Designer.cs">
       <DependentUpon>ucDangKy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucDangKyPT.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucDangKyPT.Designer.cs">
+      <DependentUpon>ucDangKyPT.cs</DependentUpon>
     </Compile>
     <Compile Include="ucDashboard.cs">
       <SubType>UserControl</SubType>
@@ -158,6 +176,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDoiMatKhau.resx">
+      <DependentUpon>frmDoiMatKhau.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -170,8 +191,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ucCheckIn.resx">
+      <DependentUpon>ucCheckIn.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucDangKy.resx">
       <DependentUpon>ucDangKy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucDangKyPT.resx">
+      <DependentUpon>ucDangKyPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucDashboard.resx">
       <DependentUpon>ucDashboard.cs</DependentUpon>

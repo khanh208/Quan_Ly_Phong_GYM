@@ -41,16 +41,12 @@
             this.lblGhiChu = new System.Windows.Forms.Label();
             this.numThoiHan = new System.Windows.Forms.NumericUpDown();
             this.lblThoiHan = new System.Windows.Forms.Label();
-            this.pnlData = new System.Windows.Forms.Panel();
-            this.pnlSearchArea = new System.Windows.Forms.Panel();
             this.lblTimKiem = new System.Windows.Forms.Label();
             this.txtSearchGoiTap = new System.Windows.Forms.TextBox();
             this.dgvGoiTap = new System.Windows.Forms.DataGridView();
             this.txtMaGoi = new System.Windows.Forms.TextBox();
             this.pnlInput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThoiHan)).BeginInit();
-            this.pnlData.SuspendLayout();
-            this.pnlSearchArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoiTap)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,7 +105,7 @@
             this.pnlInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.pnlInput.Location = new System.Drawing.Point(0, 0);
             this.pnlInput.Name = "pnlInput";
-            this.pnlInput.Size = new System.Drawing.Size(500, 685);
+            this.pnlInput.Size = new System.Drawing.Size(500, 942);
             this.pnlInput.TabIndex = 4;
             // 
             // btnLamMoi
@@ -191,41 +187,22 @@
             this.lblThoiHan.TabIndex = 4;
             this.lblThoiHan.Text = "Thời hạn (Ngày):";
             // 
-            // pnlData
-            // 
-            this.pnlData.Controls.Add(this.pnlSearchArea);
-            this.pnlData.Controls.Add(this.dgvGoiTap);
-            this.pnlData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlData.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.pnlData.Location = new System.Drawing.Point(500, 0);
-            this.pnlData.Name = "pnlData";
-            this.pnlData.Size = new System.Drawing.Size(775, 685);
-            this.pnlData.TabIndex = 5;
-            // 
-            // pnlSearchArea
-            // 
-            this.pnlSearchArea.Controls.Add(this.lblTimKiem);
-            this.pnlSearchArea.Controls.Add(this.txtSearchGoiTap);
-            this.pnlSearchArea.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSearchArea.Location = new System.Drawing.Point(0, 0);
-            this.pnlSearchArea.Name = "pnlSearchArea";
-            this.pnlSearchArea.Size = new System.Drawing.Size(775, 35);
-            this.pnlSearchArea.TabIndex = 2;
-            // 
             // lblTimKiem
             // 
             this.lblTimKiem.AutoSize = true;
-            this.lblTimKiem.Location = new System.Drawing.Point(50, 3);
+            this.lblTimKiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.lblTimKiem.Location = new System.Drawing.Point(589, 17);
             this.lblTimKiem.Name = "lblTimKiem";
-            this.lblTimKiem.Size = new System.Drawing.Size(101, 25);
+            this.lblTimKiem.Size = new System.Drawing.Size(111, 26);
             this.lblTimKiem.TabIndex = 1;
             this.lblTimKiem.Text = "Tìm Kiếm:";
             // 
             // txtSearchGoiTap
             // 
-            this.txtSearchGoiTap.Location = new System.Drawing.Point(157, 0);
+            this.txtSearchGoiTap.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.txtSearchGoiTap.Location = new System.Drawing.Point(731, 12);
             this.txtSearchGoiTap.Name = "txtSearchGoiTap";
-            this.txtSearchGoiTap.Size = new System.Drawing.Size(491, 30);
+            this.txtSearchGoiTap.Size = new System.Drawing.Size(491, 32);
             this.txtSearchGoiTap.TabIndex = 0;
             this.txtSearchGoiTap.TextChanged += new System.EventHandler(this.txtSearchGoiTap_TextChanged);
             // 
@@ -234,40 +211,39 @@
             this.dgvGoiTap.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvGoiTap.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGoiTap.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dgvGoiTap.Location = new System.Drawing.Point(6, 36);
+            this.dgvGoiTap.Location = new System.Drawing.Point(517, 65);
             this.dgvGoiTap.Name = "dgvGoiTap";
             this.dgvGoiTap.RowHeadersWidth = 51;
             this.dgvGoiTap.RowTemplate.Height = 24;
             this.dgvGoiTap.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvGoiTap.Size = new System.Drawing.Size(769, 649);
+            this.dgvGoiTap.Size = new System.Drawing.Size(1196, 765);
             this.dgvGoiTap.TabIndex = 1;
             this.dgvGoiTap.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoiTap_CellClick);
             // 
             // txtMaGoi
             // 
             this.txtMaGoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtMaGoi.Location = new System.Drawing.Point(226, 36);
+            this.txtMaGoi.Location = new System.Drawing.Point(226, 32);
             this.txtMaGoi.Name = "txtMaGoi";
             this.txtMaGoi.Size = new System.Drawing.Size(179, 30);
             this.txtMaGoi.TabIndex = 17;
-            this.txtMaGoi.Visible = false;
             // 
             // ucGoiTap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlData);
+            this.Controls.Add(this.lblTimKiem);
+            this.Controls.Add(this.txtSearchGoiTap);
+            this.Controls.Add(this.dgvGoiTap);
             this.Controls.Add(this.pnlInput);
             this.Name = "ucGoiTap";
-            this.Size = new System.Drawing.Size(1275, 685);
+            this.Size = new System.Drawing.Size(1853, 942);
             this.pnlInput.ResumeLayout(false);
             this.pnlInput.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThoiHan)).EndInit();
-            this.pnlData.ResumeLayout(false);
-            this.pnlSearchArea.ResumeLayout(false);
-            this.pnlSearchArea.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoiTap)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -278,7 +254,6 @@
         private System.Windows.Forms.Label lblGia;
         private System.Windows.Forms.TextBox txtGia;
         private System.Windows.Forms.Panel pnlInput;
-        private System.Windows.Forms.Panel pnlData;
         private System.Windows.Forms.Label lblGhiChu;
         private System.Windows.Forms.NumericUpDown numThoiHan;
         private System.Windows.Forms.Label lblThoiHan;
@@ -289,7 +264,6 @@
         private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.TextBox txtSearchGoiTap;
         private System.Windows.Forms.DataGridView dgvGoiTap;
-        private System.Windows.Forms.Panel pnlSearchArea;
         private System.Windows.Forms.Label lblTimKiem;
         private System.Windows.Forms.TextBox txtMaGoi;
     }

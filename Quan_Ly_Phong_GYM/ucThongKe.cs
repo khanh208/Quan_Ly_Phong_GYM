@@ -18,7 +18,6 @@ namespace Quan_Ly_Phong_GYM
 
         private void ucThongKe_Load(object sender, EventArgs e)
         {
-
             // Thiết lập ngày mặc định: Từ đầu tháng đến hiện tại
             dtpTuNgay.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dtpDenNgay.Value = DateTime.Now;
@@ -59,26 +58,35 @@ namespace Quan_Ly_Phong_GYM
             string tuNgay = dtpTuNgay.Value.ToString("yyyy-MM-dd 00:00:00");
             string denNgay = dtpDenNgay.Value.ToString("yyyy-MM-dd 23:59:59");
 
-            // 2. Lấy MaNV an toàn (Tránh lỗi Crash)
+            // 2. Lấy MaNV an toàn
             int maNV = 0;
             if (cboNhanVien.SelectedValue != null && int.TryParse(cboNhanVien.SelectedValue.ToString(), out int id))
             {
                 maNV = id;
             }
 
-            // Tạo chuỗi lọc SQL
+            // Tạo chuỗi lọc SQL cho Gói tập và Vé ngày
             string filterNV = (maNV > 0) ? $" AND MaNV = {maNV}" : "";
+
+            // Xử lý riêng cho Gói PT (Vì bảng DangKyPT hiện tại không lưu MaNV người bán)
+            // Nếu chọn "Tất cả nhân viên" (maNV == 0) thì mới cộng tiền PT vào
+            string sqlGop_PT = (maNV == 0) ? $" UNION ALL SELECT CAST(NgayDangKy AS DATE) as Ngay, ThanhTien as Tien FROM DangKyPT WHERE NgayDangKy BETWEEN '{tuNgay}' AND '{denNgay}'" : "";
+            string sqlChiTiet_PT = (maNV == 0) ? $" UNION ALL SELECT N'Gói PT' as Loai, pt.NgayDangKy as Ngay, N'Hệ thống' as NguoiBan, pt.ThanhTien FROM DangKyPT pt WHERE pt.NgayDangKy BETWEEN '{tuNgay}' AND '{denNgay}'" : "";
 
             try
             {
-                // 3. SQL gộp doanh thu cho Biểu đồ
+                // 3. SQL gộp doanh thu cho Biểu đồ (Đã bổ sung Gói PT)
                 string sqlGop = $@"
             SELECT Ngay, SUM(Tien) as DoanhThu FROM (
                 SELECT CAST(NgayDangKy AS DATE) as Ngay, TongTien as Tien FROM DangKy 
                 WHERE NgayDangKy BETWEEN '{tuNgay}' AND '{denNgay}' {filterNV}
+                
                 UNION ALL
+                
                 SELECT CAST(NgayBan AS DATE) as Ngay, (SoLuong * DonGia) as Tien FROM VeNgay 
                 WHERE NgayBan BETWEEN '{tuNgay}' AND '{denNgay}' {filterNV}
+                
+                {sqlGop_PT}
             ) t
             GROUP BY Ngay ORDER BY Ngay ASC";
 
@@ -101,44 +109,53 @@ namespace Quan_Ly_Phong_GYM
                 chartDoanhThu.DataSource = dtDoanhThu;
                 chartDoanhThu.DataBind();
 
-                // 5. SQL chi tiết danh sách (Quan trọng: Chỉ rõ bảng khi lọc MaNV)
+                // 5. SQL chi tiết danh sách (Đã bổ sung Gói PT)
                 string filterNV_DK = (maNV > 0) ? $" AND dk.MaNV = {maNV}" : "";
                 string filterNV_VN = (maNV > 0) ? $" AND vn.MaNV = {maNV}" : "";
 
                 string sqlChiTiet = $@"
-            SELECT 'Hội Viên' as Loai, dk.NgayDangKy as Ngay, nv.HoTen as NguoiBan, dk.TongTien 
+            SELECT N'Gói Tập' as Loai, dk.NgayDangKy as Ngay, nv.HoTen as NguoiBan, dk.TongTien 
             FROM DangKy dk JOIN NhanVien nv ON dk.MaNV = nv.MaNV 
             WHERE dk.NgayDangKy BETWEEN '{tuNgay}' AND '{denNgay}' {filterNV_DK}
+            
             UNION ALL
-            SELECT 'Vãng Lai' as Loai, vn.NgayBan as Ngay, nv.HoTen as NguoiBan, (vn.SoLuong * vn.DonGia) as TongTien 
+            
+            SELECT N'Vãng Lai' as Loai, vn.NgayBan as Ngay, nv.HoTen as NguoiBan, (vn.SoLuong * vn.DonGia) as TongTien 
             FROM VeNgay vn JOIN NhanVien nv ON vn.MaNV = nv.MaNV 
             WHERE vn.NgayBan BETWEEN '{tuNgay}' AND '{denNgay}' {filterNV_VN}
+            
+            {sqlChiTiet_PT}
+            
             ORDER BY Ngay DESC";
 
                 dgvChiTiet.DataSource = db.ExecuteQuery(sqlChiTiet);
+
+                // Căn chỉnh DataGridView cho đẹp
+                if (dgvChiTiet.Columns.Count > 0)
+                {
+                    dgvChiTiet.Columns["Loai"].HeaderText = "Loại Thu";
+                    dgvChiTiet.Columns["Ngay"].HeaderText = "Ngày Giao Dịch";
+                    dgvChiTiet.Columns["Ngay"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
+                    dgvChiTiet.Columns["NguoiBan"].HeaderText = "Người Thu Tiền";
+                    dgvChiTiet.Columns["TongTien"].HeaderText = "Số Tiền (VNĐ)";
+                    dgvChiTiet.Columns["TongTien"].DefaultCellStyle.Format = "N0";
+                    dgvChiTiet.Columns["TongTien"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+                    dgvChiTiet.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
             }
             catch (Exception ex) { MessageBox.Show("Lỗi thống kê: " + ex.Message); }
         }
 
+        // Nút Lọc và Nút Thống kê giờ đây có cùng 1 chức năng, gọi thẳng hàm ThongKeDoanhThu
         private void btnLoc_Click(object sender, EventArgs e)
         {
-            int maNVChon = Convert.ToInt32(cboNhanVien.SelectedValue);
-
-            string filter = "";
-            // Nếu maNVChon > 0 nghĩa là đang chọn một người cụ thể
-            if (maNVChon > 0)
-            {
-                filter = $" AND MaNV = {maNVChon}";
-            }
-
-            // Sau đó cộng chuỗi filter này vào câu SQL thống kê của em
-            string sql = "SELECT ... FROM VeNgay WHERE NgayBan BETWEEN ... " + filter;
-
             ThongKeDoanhThu();
         }
+
         private void btnThongKe_Click(object sender, EventArgs e)
         {
-            ThongKeDoanhThu(); // Nhấn nút là phải chạy lại hàm tính toán
+            ThongKeDoanhThu();
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)
@@ -147,7 +164,7 @@ namespace Quan_Ly_Phong_GYM
             {
                 var worksheet = workbook.Worksheets.Add("DoanhThu");
 
-                // Đổ tiêu đề từ DataGridView vào Excel (Dùng vòng lặp đơn giản)
+                // Đổ tiêu đề từ DataGridView vào Excel
                 for (int i = 1; i <= dgvChiTiet.Columns.Count; i++)
                 {
                     worksheet.Cell(1, i).Value = dgvChiTiet.Columns[i - 1].HeaderText;
@@ -162,13 +179,16 @@ namespace Quan_Ly_Phong_GYM
                     }
                 }
 
+                // Căn chỉnh cột Excel cho vừa vặn chữ
+                worksheet.Columns().AdjustToContents();
+
                 // Lưu file
-                SaveFileDialog sfd = new SaveFileDialog() { Filter = "Excel Workbook|*.xlsx" };
+                SaveFileDialog sfd = new SaveFileDialog() { Filter = "Excel Workbook|*.xlsx", FileName = "ThongKeDoanhThu.xlsx" };
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     workbook.SaveAs(sfd.FileName);
-                    MessageBox.Show("Đã xuất file thành công!");
-                    System.Diagnostics.Process.Start(sfd.FileName);
+                    MessageBox.Show("Đã xuất file Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    System.Diagnostics.Process.Start(sfd.FileName); // Mở file ngay sau khi lưu
                 }
             }
         }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblMoTa = new System.Windows.Forms.Label();
             this.txtMoTa = new System.Windows.Forms.TextBox();
@@ -43,11 +44,9 @@
             this.lblPhanTram = new System.Windows.Forms.Label();
             this.lblTenGoi = new System.Windows.Forms.Label();
             this.txtTenKM = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.dgvKhuyenMai = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPhanTram)).BeginInit();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhuyenMai)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,7 +70,7 @@
             this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(500, 577);
+            this.panel1.Size = new System.Drawing.Size(500, 945);
             this.panel1.TabIndex = 0;
             // 
             // lblMoTa
@@ -209,25 +208,23 @@
             this.txtTenKM.Size = new System.Drawing.Size(179, 30);
             this.txtTenKM.TabIndex = 17;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.dgvKhuyenMai);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.panel2.Location = new System.Drawing.Point(500, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(911, 577);
-            this.panel2.TabIndex = 1;
-            // 
             // dgvKhuyenMai
             // 
+            this.dgvKhuyenMai.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvKhuyenMai.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvKhuyenMai.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvKhuyenMai.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvKhuyenMai.Location = new System.Drawing.Point(0, 0);
+            this.dgvKhuyenMai.Location = new System.Drawing.Point(526, 65);
             this.dgvKhuyenMai.Name = "dgvKhuyenMai";
             this.dgvKhuyenMai.RowHeadersWidth = 51;
             this.dgvKhuyenMai.RowTemplate.Height = 24;
-            this.dgvKhuyenMai.Size = new System.Drawing.Size(911, 577);
+            this.dgvKhuyenMai.Size = new System.Drawing.Size(1197, 725);
             this.dgvKhuyenMai.TabIndex = 0;
             this.dgvKhuyenMai.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKhuyenMai_CellClick);
             // 
@@ -235,14 +232,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.dgvKhuyenMai);
             this.Controls.Add(this.panel1);
             this.Name = "ucKhuyenMai";
-            this.Size = new System.Drawing.Size(1411, 577);
+            this.Size = new System.Drawing.Size(1856, 945);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPhanTram)).EndInit();
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhuyenMai)).EndInit();
             this.ResumeLayout(false);
 
@@ -251,7 +247,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnLamMoi;
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnLamMoi = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
@@ -50,11 +51,9 @@
             this.txtTenDangNhap = new System.Windows.Forms.TextBox();
             this.lblMatKhau = new System.Windows.Forms.Label();
             this.txtSDT = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.dgvNhanVien = new System.Windows.Forms.DataGridView();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNhanVien)).BeginInit();
             this.SuspendLayout();
             // 
@@ -157,7 +156,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(500, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1053, 35);
+            this.panel3.Size = new System.Drawing.Size(1356, 35);
             this.panel3.TabIndex = 47;
             // 
             // lblTimKiem
@@ -208,7 +207,7 @@
             this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(500, 894);
+            this.panel1.Size = new System.Drawing.Size(500, 1072);
             this.panel1.TabIndex = 45;
             // 
             // lblTrangThai
@@ -293,23 +292,23 @@
             this.txtSDT.TabIndex = 48;
             this.txtSDT.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSDT_KeyPress);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.dgvNhanVien);
-            this.panel2.Location = new System.Drawing.Point(522, 56);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(961, 763);
-            this.panel2.TabIndex = 46;
-            // 
             // dgvNhanVien
             // 
+            this.dgvNhanVien.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvNhanVien.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvNhanVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvNhanVien.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvNhanVien.Location = new System.Drawing.Point(0, 0);
+            this.dgvNhanVien.Location = new System.Drawing.Point(506, 61);
             this.dgvNhanVien.Name = "dgvNhanVien";
             this.dgvNhanVien.RowHeadersWidth = 51;
             this.dgvNhanVien.RowTemplate.Height = 24;
-            this.dgvNhanVien.Size = new System.Drawing.Size(961, 763);
+            this.dgvNhanVien.Size = new System.Drawing.Size(1210, 857);
             this.dgvNhanVien.TabIndex = 29;
             this.dgvNhanVien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvNhanVien_CellClick);
             // 
@@ -317,6 +316,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dgvNhanVien);
             this.Controls.Add(this.txtHoTen);
             this.Controls.Add(this.txtMaNV);
             this.Controls.Add(this.lblHoTen);
@@ -325,14 +325,12 @@
             this.Controls.Add(this.lblTenDangNhap);
             this.Controls.Add(this.lblSDT);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
             this.Name = "ucQuanLyNhanVien";
-            this.Size = new System.Drawing.Size(1553, 894);
+            this.Size = new System.Drawing.Size(1856, 1072);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvNhanVien)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -355,7 +353,6 @@
         private System.Windows.Forms.Label lblTenDangNhap;
         private System.Windows.Forms.Label lblSDT;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dgvNhanVien;
         private System.Windows.Forms.TextBox txtSDT;
         private System.Windows.Forms.TextBox txtMatKhau;

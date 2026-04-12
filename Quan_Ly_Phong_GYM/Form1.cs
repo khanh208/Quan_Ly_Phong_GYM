@@ -28,9 +28,15 @@ namespace Quan_Ly_Phong_GYM
             // Nếu là NHÂN VIÊN (ghi đúng chữ trong Database của em, ví dụ: "NHÂN VIÊN")
             if (quyen == "NHÂN VIÊN" || quyen == "NHANVIEN")
             {
-                btnThongKe.Visible = false;
-                btnNhanVien.Visible = false; // Phải đảm bảo (Name) của nút đúng là btnNhanVien
+                // Ẩn các chức năng chỉ dành cho Admin
+                btnThongKe.Visible = false;      // Thống kê
+                btnNhanVien.Visible = false;     // Quản lý Nhân viên
+                btnGoiTap.Visible = false;       // Quản lý Gói tập
+                btnKhuyenMai.Visible = false;    // Quản lý Khuyến mãi
+                button1.Visible = false;         // Quản lý Huấn luyện viên (Nút này đang mang tên button1)
             }
+            ucDashboard ucDash = new ucDashboard();
+            addUserControl(ucDash);
         }
 
         private void addUserControl(UserControl userControl)
@@ -111,6 +117,31 @@ namespace Quan_Ly_Phong_GYM
                 this.Close();
                 Application.Restart(); // Khởi động lại để hiện Form Login
             }
+        }
+
+        private void btnDoiMatKhau_Click(object sender, EventArgs e)
+        {
+            // Mở Form đổi mật khẩu lên dưới dạng hộp thoại (phải xử lý xong mới quay lại Form chính được)
+            frmDoiMatKhau frm = new frmDoiMatKhau();
+            frm.ShowDialog();
+        }
+
+        private void btnTrangChu_Click(object sender, EventArgs e)
+        {
+            ucDashboard ucDash = new ucDashboard();
+            addUserControl(ucDash);
+        }
+
+        private void btnCheckIn_Click(object sender, EventArgs e)
+        {
+            ucCheckIn uc = new ucCheckIn();
+            addUserControl(uc);
+        }
+
+        private void btnDangKyPY_Click(object sender, EventArgs e)
+        {
+            ucDangKyPT uc = new ucDangKyPT();
+            addUserControl(uc);
         }
     }
 }

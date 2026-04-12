@@ -31,6 +31,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtpTuNgay = new System.Windows.Forms.DateTimePicker();
             this.lblNgayBatDau = new System.Windows.Forms.Label();
             this.lblNgayKetThuc = new System.Windows.Forms.Label();
@@ -43,9 +44,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.blTongDoanhThu = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnExportExcel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cboNhanVien = new System.Windows.Forms.ComboBox();
-            this.btnExportExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).BeginInit();
             this.panel1.SuspendLayout();
@@ -143,12 +144,21 @@
             // 
             // dgvChiTiet
             // 
+            this.dgvChiTiet.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvChiTiet.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvChiTiet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvChiTiet.Location = new System.Drawing.Point(820, 79);
+            this.dgvChiTiet.Location = new System.Drawing.Point(820, 104);
             this.dgvChiTiet.Name = "dgvChiTiet";
             this.dgvChiTiet.RowHeadersWidth = 51;
             this.dgvChiTiet.RowTemplate.Height = 24;
-            this.dgvChiTiet.Size = new System.Drawing.Size(845, 867);
+            this.dgvChiTiet.Size = new System.Drawing.Size(898, 846);
             this.dgvChiTiet.TabIndex = 8;
             // 
             // panel1
@@ -157,14 +167,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(814, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(629, 73);
+            this.panel1.Size = new System.Drawing.Size(1162, 73);
             this.panel1.TabIndex = 9;
             // 
             // blTongDoanhThu
             // 
             this.blTongDoanhThu.AutoSize = true;
             this.blTongDoanhThu.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
-            this.blTongDoanhThu.Location = new System.Drawing.Point(121, 0);
+            this.blTongDoanhThu.Location = new System.Drawing.Point(379, 0);
             this.blTongDoanhThu.Name = "blTongDoanhThu";
             this.blTongDoanhThu.Size = new System.Drawing.Size(376, 58);
             this.blTongDoanhThu.TabIndex = 10;
@@ -186,8 +196,19 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(814, 801);
+            this.panel2.Size = new System.Drawing.Size(814, 1111);
             this.panel2.TabIndex = 10;
+            // 
+            // btnExportExcel
+            // 
+            this.btnExportExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnExportExcel.Location = new System.Drawing.Point(542, 79);
+            this.btnExportExcel.Name = "btnExportExcel";
+            this.btnExportExcel.Size = new System.Drawing.Size(236, 34);
+            this.btnExportExcel.TabIndex = 10;
+            this.btnExportExcel.Text = "Xuất file excel";
+            this.btnExportExcel.UseVisualStyleBackColor = true;
+            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
             // label2
             // 
@@ -208,17 +229,6 @@
             this.cboNhanVien.Size = new System.Drawing.Size(203, 33);
             this.cboNhanVien.TabIndex = 8;
             // 
-            // btnExportExcel
-            // 
-            this.btnExportExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnExportExcel.Location = new System.Drawing.Point(542, 79);
-            this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(236, 34);
-            this.btnExportExcel.TabIndex = 10;
-            this.btnExportExcel.Text = "Xuất file excel";
-            this.btnExportExcel.UseVisualStyleBackColor = true;
-            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
-            // 
             // ucThongKe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -227,7 +237,7 @@
             this.Controls.Add(this.dgvChiTiet);
             this.Controls.Add(this.panel2);
             this.Name = "ucThongKe";
-            this.Size = new System.Drawing.Size(1443, 801);
+            this.Size = new System.Drawing.Size(1976, 1111);
             this.Load += new System.EventHandler(this.ucThongKe_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).EndInit();

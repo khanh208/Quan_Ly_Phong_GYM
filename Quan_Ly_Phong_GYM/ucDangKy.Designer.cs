@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cboHoiVien = new System.Windows.Forms.ComboBox();
             this.cboGoiTap = new System.Windows.Forms.ComboBox();
             this.cboHLV = new System.Windows.Forms.ComboBox();
@@ -46,9 +47,9 @@
             this.lblGhiChu = new System.Windows.Forms.Label();
             this.dgvDangKy = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnThanhToan = new System.Windows.Forms.Button();
-            this.btnCapNhatHLV = new System.Windows.Forms.Button();
             this.btnGiaHan = new System.Windows.Forms.Button();
+            this.btnCapNhatHLV = new System.Windows.Forms.Button();
+            this.btnThanhToan = new System.Windows.Forms.Button();
             this.lblTimKiem = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDangKy)).BeginInit();
@@ -215,12 +216,21 @@
             // 
             // dgvDangKy
             // 
+            this.dgvDangKy.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDangKy.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvDangKy.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDangKy.Location = new System.Drawing.Point(450, 55);
+            this.dgvDangKy.Location = new System.Drawing.Point(463, 63);
             this.dgvDangKy.Name = "dgvDangKy";
             this.dgvDangKy.RowHeadersWidth = 51;
             this.dgvDangKy.RowTemplate.Height = 24;
-            this.dgvDangKy.Size = new System.Drawing.Size(1013, 713);
+            this.dgvDangKy.Size = new System.Drawing.Size(1258, 786);
             this.dgvDangKy.TabIndex = 16;
             this.dgvDangKy.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDangKy_CellClick);
             // 
@@ -232,19 +242,20 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(444, 768);
+            this.panel1.Size = new System.Drawing.Size(444, 835);
             this.panel1.TabIndex = 17;
             // 
-            // btnThanhToan
+            // btnGiaHan
             // 
-            this.btnThanhToan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnThanhToan.Location = new System.Drawing.Point(52, 628);
-            this.btnThanhToan.Name = "btnThanhToan";
-            this.btnThanhToan.Size = new System.Drawing.Size(162, 41);
-            this.btnThanhToan.TabIndex = 0;
-            this.btnThanhToan.Text = "Mua gói tập";
-            this.btnThanhToan.UseVisualStyleBackColor = true;
-            this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
+            this.btnGiaHan.Enabled = false;
+            this.btnGiaHan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnGiaHan.Location = new System.Drawing.Point(234, 628);
+            this.btnGiaHan.Name = "btnGiaHan";
+            this.btnGiaHan.Size = new System.Drawing.Size(162, 41);
+            this.btnGiaHan.TabIndex = 2;
+            this.btnGiaHan.Text = "Gia hạn gói tập";
+            this.btnGiaHan.UseVisualStyleBackColor = true;
+            this.btnGiaHan.Click += new System.EventHandler(this.btnGiaHan_Click);
             // 
             // btnCapNhatHLV
             // 
@@ -258,17 +269,16 @@
             this.btnCapNhatHLV.UseVisualStyleBackColor = true;
             this.btnCapNhatHLV.Click += new System.EventHandler(this.btnCapNhatHLV_Click);
             // 
-            // btnGiaHan
+            // btnThanhToan
             // 
-            this.btnGiaHan.Enabled = false;
-            this.btnGiaHan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnGiaHan.Location = new System.Drawing.Point(234, 628);
-            this.btnGiaHan.Name = "btnGiaHan";
-            this.btnGiaHan.Size = new System.Drawing.Size(162, 41);
-            this.btnGiaHan.TabIndex = 2;
-            this.btnGiaHan.Text = "Gia hạn gói tập";
-            this.btnGiaHan.UseVisualStyleBackColor = true;
-            this.btnGiaHan.Click += new System.EventHandler(this.btnGiaHan_Click);
+            this.btnThanhToan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnThanhToan.Location = new System.Drawing.Point(52, 628);
+            this.btnThanhToan.Name = "btnThanhToan";
+            this.btnThanhToan.Size = new System.Drawing.Size(162, 41);
+            this.btnThanhToan.TabIndex = 0;
+            this.btnThanhToan.Text = "Mua gói tập";
+            this.btnThanhToan.UseVisualStyleBackColor = true;
+            this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
             // 
             // lblTimKiem
             // 
@@ -313,7 +323,7 @@
             this.Controls.Add(this.cboHoiVien);
             this.Controls.Add(this.panel1);
             this.Name = "ucDangKy";
-            this.Size = new System.Drawing.Size(1463, 768);
+            this.Size = new System.Drawing.Size(1663, 835);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDangKy)).EndInit();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnLamMoi = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
@@ -45,10 +46,8 @@
             this.lblTimKiem = new System.Windows.Forms.Label();
             this.txtSearchHLV = new System.Windows.Forms.TextBox();
             this.dgvHLV = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHLV)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLamMoi
@@ -185,7 +184,7 @@
             this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(500, 552);
+            this.panel1.Size = new System.Drawing.Size(500, 943);
             this.panel1.TabIndex = 30;
             // 
             // panel3
@@ -195,7 +194,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(500, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(769, 35);
+            this.panel3.Size = new System.Drawing.Size(1355, 35);
             this.panel3.TabIndex = 32;
             // 
             // lblTimKiem
@@ -219,27 +218,29 @@
             // 
             // dgvHLV
             // 
+            this.dgvHLV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHLV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHLV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHLV.Location = new System.Drawing.Point(506, 39);
+            this.dgvHLV.Location = new System.Drawing.Point(521, 56);
             this.dgvHLV.Name = "dgvHLV";
             this.dgvHLV.RowHeadersWidth = 51;
             this.dgvHLV.RowTemplate.Height = 24;
-            this.dgvHLV.Size = new System.Drawing.Size(760, 510);
+            this.dgvHLV.Size = new System.Drawing.Size(1188, 740);
             this.dgvHLV.TabIndex = 29;
             this.dgvHLV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHLV_CellClick);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.dgvHLV);
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1269, 552);
-            this.panel2.TabIndex = 31;
             // 
             // ucHuanLuyenVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dgvHLV);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.lblTrangThai);
             this.Controls.Add(this.cboTrangThai);
@@ -254,13 +255,11 @@
             this.Controls.Add(this.lblSDT);
             this.Controls.Add(this.lblTenHLV);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
             this.Name = "ucHuanLuyenVien";
-            this.Size = new System.Drawing.Size(1269, 552);
+            this.Size = new System.Drawing.Size(1855, 943);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHLV)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,6 +284,5 @@
         private System.Windows.Forms.TextBox txtSearchHLV;
         private System.Windows.Forms.Label lblTimKiem;
         private System.Windows.Forms.DataGridView dgvHLV;
-        private System.Windows.Forms.Panel panel2;
     }
 }
