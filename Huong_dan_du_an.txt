@@ -7,7 +7,7 @@ Mở phần mềm SQL Server Management Studio (SSMS) và đăng nhập vào Ser
 
 Tại thanh công cụ, chọn File -> Open -> File... (Hoặc bấm Ctrl + O).
 
-Điều hướng đến thư mục project, chọn file Database.sql để mở.
+Điều hướng đến thư mục project, chọn file QL_GYM.sql để mở.
 
 Bấm nút Execute (hoặc phím F5) để chạy lệnh. Hệ thống sẽ tự động tạo Database có tên là QL_GYM cùng toàn bộ bảng và dữ liệu mẫu.
 
@@ -64,7 +64,7 @@ Sử dụng tài khoản mặc định sau để test:
 
 Tên đăng nhập: admin
 
-Mật khẩu: 123456
+Mật khẩu: admin123
 (Đây là tài khoản Admin có toàn quyền truy cập toàn bộ hệ thống).
 ---
 
