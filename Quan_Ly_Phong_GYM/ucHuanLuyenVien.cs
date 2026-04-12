@@ -16,7 +16,14 @@ namespace Quan_Ly_Phong_GYM
 
         private void ucHuanLuyenVien_Load(object sender, EventArgs e)
         {
+            // 1. KHÓA UI: Chặn gõ quá 10 số
+            txtSDT.MaxLength = 10;
+
+            // 2. Tự động gắn sự kiện chặn nhập chữ cho ô SĐT
+            txtSDT.KeyPress += new KeyPressEventHandler(txtSDT_KeyPress);
+
             LoadData();
+
             // Thiết lập ComboBox nếu chưa có Item
             if (cboChuyenMon.Items.Count == 0)
             {
@@ -24,7 +31,17 @@ namespace Quan_Ly_Phong_GYM
             }
         }
 
-        // 1. Hàm nạp dữ liệu - Đảm bảo dùng bảng HLV
+        // --- SỰ KIỆN CHẶN NHẬP CHỮ ---
+        private void txtSDT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Chỉ cho phép nhập phím điều khiển (như Backspace) và phím số
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Chặn phím không hợp lệ
+            }
+        }
+
+        // 1. Hàm nạp dữ liệu
         public void LoadData()
         {
             try
@@ -39,7 +56,7 @@ namespace Quan_Ly_Phong_GYM
                 if (dgvHLV.Columns["ChuyenMon"] != null) dgvHLV.Columns["ChuyenMon"].HeaderText = "Chuyên môn";
                 if (dgvHLV.Columns["TrangThai"] != null) dgvHLV.Columns["TrangThai"].HeaderText = "Trạng thái";
             }
-            catch (Exception ex) { MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message); }
+            catch (Exception ex) { MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         // 2. Chức năng Thêm HLV
@@ -47,24 +64,28 @@ namespace Quan_Ly_Phong_GYM
         {
             if (ValidateInput())
             {
-                // Dùng bảng HLV
                 string query = $"INSERT INTO HLV (HoTen, SDT, ChuyenMon, TrangThai) " +
                                $"VALUES (N'{txtHoTen.Text.Trim()}', '{txtSDT.Text.Trim()}', " +
                                $"N'{cboChuyenMon.Text}', N'Đang làm việc')";
 
                 if (db.ExecuteNonQuery(query) > 0)
                 {
-                    MessageBox.Show("Thêm Huấn luyện viên vào SQL thành công!");
+                    MessageBox.Show("Thêm Huấn luyện viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
                     ClearInputs();
                 }
             }
         }
 
-        // 3. Chức năng Sửa HLV - Đã sửa tên bảng thành HLV
+        // 3. Chức năng Sửa HLV
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (dgvHLV.CurrentRow == null) return;
+            if (dgvHLV.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn HLV cần sửa từ danh sách!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string maHLV = dgvHLV.CurrentRow.Cells["MaHLV"].Value.ToString();
 
             if (ValidateInput())
@@ -75,32 +96,54 @@ namespace Quan_Ly_Phong_GYM
 
                 if (db.ExecuteNonQuery(query) > 0)
                 {
-                    MessageBox.Show("Cập nhật thông tin thành công!");
+                    MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadData();
                 }
             }
         }
 
-        // 4. Chức năng Xóa HLV - Đã sửa tên bảng thành HLV
+        // 4. Chức năng Xóa HLV (Đã tích hợp bẫy lỗi Khóa Ngoại)
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (dgvHLV.CurrentRow == null) return;
-            string maHLV = dgvHLV.CurrentRow.Cells["MaHLV"].Value.ToString();
-            string tenHLV = dgvHLV.CurrentRow.Cells["HoTen"].Value.ToString();
+            if (dgvHLV.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn HLV cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            DialogResult dr = MessageBox.Show($"Bạn có chắc muốn xóa HLV {tenHLV}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            string id = dgvHLV.CurrentRow.Cells["MaHLV"].Value.ToString();
+            string ten = dgvHLV.CurrentRow.Cells["HoTen"].Value.ToString();
+
+            DialogResult dr = MessageBox.Show($"Bạn có chắc chắn muốn xóa HLV: {ten}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
-                string query = $"DELETE FROM HLV WHERE MaHLV = {maHLV}";
-                if (db.ExecuteNonQuery(query) > 0)
+                try
                 {
-                    LoadData();
-                    ClearInputs();
+                    string query = $"DELETE FROM HLV WHERE MaHLV = {id}";
+                    if (db.ExecuteNonQuery(query) > 0)
+                    {
+                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadData();
+                        ClearInputs();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý không cho xóa nếu dính Khóa Ngoại (Foreign Key Constraint)
+                    if (ex.Message.Contains("REFERENCE") || ex.Message.Contains("FOREIGN KEY") || ex.Message.Contains("conflict"))
+                    {
+                        MessageBox.Show("⛔ KHÔNG THỂ XÓA!\n\nHuấn luyện viên này đang được xếp lịch dạy hoặc đã có lịch sử dạy học viên. Không thể xóa để tránh làm hỏng dữ liệu các gói PT!\n\n💡 Gợi ý: Hãy xóa/đổi HLV ở các phiếu đăng ký trước, hoặc chỉ cần sửa thông tin.",
+                                        "Khóa bảo vệ dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
-        // 5. Tìm kiếm tức thời - Đã sửa tên bảng thành HLV
+        // 5. Tìm kiếm tức thời
         private void txtSearchHLV_TextChanged(object sender, EventArgs e)
         {
             string key = txtSearchHLV.Text.Trim();
@@ -121,19 +164,33 @@ namespace Quan_Ly_Phong_GYM
             }
         }
 
-        // --- HÀM HỖ TRỢ ---
+        // --- HÀM KIỂM TRA ĐẦU VÀO (VALIDATION) ---
         private bool ValidateInput()
         {
+            // Kiểm tra tên
             if (string.IsNullOrWhiteSpace(txtHoTen.Text))
             {
-                MessageBox.Show("Vui lòng nhập tên huấn luyện viên!");
+                MessageBox.Show("Vui lòng nhập tên huấn luyện viên!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtHoTen.Focus();
                 return false;
             }
-            if (txtSDT.Text.Length < 10 || !txtSDT.Text.All(char.IsDigit))
+
+            // Kiểm tra Số điện thoại (Chính xác 10 số và phải bắt đầu bằng 0)
+            if (txtSDT.Text.Length != 10 || !txtSDT.Text.StartsWith("0") || !txtSDT.Text.All(char.IsDigit))
             {
-                MessageBox.Show("Số điện thoại không hợp lệ!");
+                MessageBox.Show("SĐT phải gồm đúng 10 chữ số và bắt đầu bằng số 0!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSDT.Focus();
                 return false;
             }
+
+            // Kiểm tra chuyên môn
+            if (string.IsNullOrWhiteSpace(cboChuyenMon.Text))
+            {
+                MessageBox.Show("Vui lòng chọn hoặc nhập chuyên môn!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cboChuyenMon.Focus();
+                return false;
+            }
+
             return true;
         }
 

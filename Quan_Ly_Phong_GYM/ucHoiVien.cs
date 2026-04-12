@@ -18,6 +18,10 @@ namespace Quan_Ly_Phong_GYM
 
         private void ucHoiVien_Load(object sender, EventArgs e)
         {
+            // 1. KHÓA UI: Chặn gõ quá 10 số và chặn chọn ngày sinh từ 10 năm đổ lại đây
+            txtSDT.MaxLength = 10;
+            dtpNgaySinh.MaxDate = DateTime.Now.AddYears(-10); // Khách tối thiểu phải 10 tuổi
+
             LoadData();
             SetupGridViewHeaders();
         }
@@ -109,14 +113,40 @@ namespace Quan_Ly_Phong_GYM
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (dgvHoiVien.CurrentRow == null) return;
-            string maHV = txtMaHV.Text;
-
-            if (MessageBox.Show("Xóa hội viên sẽ mất toàn bộ lịch sử tập luyện. Bạn chắc chứ?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
+            if (dgvHoiVien.CurrentRow == null)
             {
-                db.ExecuteNonQuery($"DELETE FROM HoiVien WHERE MaHV = {maHV}");
-                LoadData();
-                ClearForm();
+                MessageBox.Show("Vui lòng chọn Hội viên cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string id = dgvHoiVien.CurrentRow.Cells["MaHV"].Value.ToString();
+            string ten = dgvHoiVien.CurrentRow.Cells["HoTen"].Value.ToString();
+
+            DialogResult dr = MessageBox.Show($"Bạn có chắc chắn muốn xóa hội viên: {ten}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+            {
+                try
+                {
+                    string query = $"DELETE FROM HoiVien WHERE MaHV = {id}";
+                    if (db.ExecuteNonQuery(query) > 0)
+                    {
+                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadData(); // Gọi lại hàm load dữ liệu của bạn
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // BẮT LỖI KHÓA NGOẠI (CHỐNG CRASH)
+                    if (ex.Message.Contains("REFERENCE") || ex.Message.Contains("FOREIGN KEY") || ex.Message.Contains("conflict"))
+                    {
+                        MessageBox.Show("⛔ KHÔNG THỂ XÓA!\n\nHội viên này đã từng phát sinh giao dịch (mua gói tập, điểm danh...). Hệ thống đã khóa cứng lệnh xóa để bảo vệ lịch sử doanh thu.\n\n💡 Gợi ý: Bạn chỉ có thể Sửa thông tin của khách hàng này.",
+                                        "Khóa bảo vệ dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi: " + ex.Message, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
 
@@ -126,14 +156,26 @@ namespace Quan_Ly_Phong_GYM
 
         private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(txtHoTen.Text) || txtSDT.Text.Length != 10)
+            if (string.IsNullOrWhiteSpace(txtHoTen.Text))
             {
-                MessageBox.Show("Vui lòng nhập đúng Tên và SĐT (10 số)!");
+                MessageBox.Show("Vui lòng nhập họ tên!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            // SĐT phải đúng 10 số và bắt đầu bằng số 0
+            if (txtSDT.Text.Length != 10 || !txtSDT.Text.StartsWith("0"))
+            {
+                MessageBox.Show("SĐT phải gồm đúng 10 chữ số và bắt đầu bằng số 0!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (cboGioiTinh.SelectedIndex == -1)
             {
-                MessageBox.Show("Vui lòng chọn giới tính!");
+                MessageBox.Show("Vui lòng chọn giới tính!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            // Kiểm tra độ tuổi (Phòng hờ nếu MaxDate ở trên bị lỗi)
+            if (DateTime.Now.Year - dtpNgaySinh.Value.Year < 10)
+            {
+                MessageBox.Show("Hội viên phải từ 10 tuổi trở lên!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;

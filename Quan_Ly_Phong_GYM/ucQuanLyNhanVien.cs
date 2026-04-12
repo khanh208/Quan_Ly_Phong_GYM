@@ -40,6 +40,9 @@ namespace Quan_Ly_Phong_GYM
             if (cboTrangThai.Items.Count == 0)
                 cboTrangThai.Items.AddRange(new string[] { "Đang làm việc", "Nghỉ việc" });
 
+            txtSDT.MaxLength = 10;
+            txtTenDangNhap.MaxLength = 20;
+
             LoadData();
         }
 
@@ -156,9 +159,9 @@ namespace Quan_Ly_Phong_GYM
             }
 
             // 2. Chặn SĐT không đủ 10 số
-            if (txtSDT.Text.Length != 10)
+            if (txtSDT.Text.Length != 10 || !txtSDT.Text.StartsWith("0"))
             {
-                MessageBox.Show("Số điện thoại phải có đúng 10 chữ số!");
+                MessageBox.Show("Số điện thoại phải có đúng 10 chữ số và bắt đầu bằng số 0!");
                 return false;
             }
 
